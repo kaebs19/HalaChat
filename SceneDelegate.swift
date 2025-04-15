@@ -13,10 +13,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // إنشاء نافذة جديدة مرتبطة بمشهد النافذة
+        window = UIWindow(windowScene: windowScene)
+        // تعيين الواجهة المناسبة كواجهة جذر للتطبيق باستخدام مدير التنقل
+        let initialViewController = AppNavigationManager.shared.determineInitialViewController()
+        window?.rootViewController = initialViewController
+        
+        // جعل النافذة مرئية وجعلها النافذة الرئيسية
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -29,6 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        // يتم استدعاء هذا عندما يصبح المشهد نشطًا
+        applyThemeMode()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -46,7 +55,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
 
+    // تطبيق وضع العرض (داكن/فاتح) حسب تفضيل المستخدم
+    private func applyThemeMode() {
+        let isDarkMode = UserDefault.shared.isThemeDarkLightMode
+        window?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+    }
+    
 
 }
 

@@ -31,6 +31,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    
+    // تكوين مظهر التطبيق العام
+    func configureAppearance() {
+        // تطبيق الوضع الداكن أو الفاتح حسب تفضيل المستخدم
+        applyThemeMode()
+        
+        // تخصيص مظهر شريط التنقل
+        let navigationBarAppearance  = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = .systemBlue
+        navigationBarAppearance.barTintColor = .white
+        
+        // تخصيص مظهر العنوان في شريط التنقل
+        navigationBarAppearance.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .medium)
+        ]
+    }
+    
+    // تطبيق وضع العرض (داكن/فاتح) بناءً على تفضيل المستخدم
+   private func  applyThemeMode() {
+       if #available(iOS 13.0, *) {
+
+           let isDarkMode = UserDefault.shared.isThemeDarkLightMode
+
+           UIApplication.shared.windows.forEach { window in
+
+               window.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+
+           }
+
+       }
+
+    }
 
 }
 

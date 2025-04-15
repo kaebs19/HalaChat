@@ -10,6 +10,7 @@ import Foundation
 enum Buttons: String , LocalizableEnim {
     
     case test = "testButton"
+    case skip = "skipButton"
     
     var textBtn: String {
         return self.localized

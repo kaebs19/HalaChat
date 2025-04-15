@@ -54,6 +54,10 @@ enum ColorSet: String {
     case card = "Card"
     case shadow = "Shadow"
     
+    // اظافية
+    case C505C69 = "#C505C69"
+    
+    
     // قيم الألوان المحددة لكل نوع في الوضع الفاتح
     var lightModeColor: UIColor {
         switch self {
@@ -68,6 +72,9 @@ enum ColorSet: String {
             case .border: return UIColor(hex: "#E0E0E0") ?? .lightGray
             case .card: return UIColor(hex: "#F8F9FA") ?? .white
             case .shadow: return UIColor(hex: "#000000")?.withAlphaComponent(0.15) ?? .black.withAlphaComponent(0.15)
+                
+                // اظافية
+            case .C505C69: return UIColor(hex: "#C505C69") ?? .systemGray2
         }
     }
     
@@ -86,16 +93,12 @@ enum ColorSet: String {
             case .border: return UIColor(hex: "#333333") ?? .darkGray
             case .card: return UIColor(hex: "#1E1E1E") ?? .darkGray
             case .shadow: return UIColor(hex: "#000000")?.withAlphaComponent(0.3) ?? .black.withAlphaComponent(0.3)
+            
+                // اظافية
+            case .C505C69: return UIColor(hex: "#C505C69") ?? .systemGray2
         }
     }
     
-    
-    
-//    var dynamicColor: UIColor {
-//        
-//        return UIColor { trait in
-//            resolve(for: trait.userInterfaceStyle)
-//        }
-//    }
+
 }
 

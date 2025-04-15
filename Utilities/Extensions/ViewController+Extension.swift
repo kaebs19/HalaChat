@@ -158,7 +158,7 @@ extension UIViewController {
     ///   - configure: دالة تخصيص اختيارية للتطبيق على الواجهة الجديدة قبل الانتقال.
     
     func goToVC(
-        storyboard: Storyborards = .Main,
+        storyboard: Storyboards = .Main,
         identifiers: Identifiers,
         navigationStyle: NavigationStyle = .push,
         animationOptions: UIView.AnimationOptions = .showHideTransitionViews,

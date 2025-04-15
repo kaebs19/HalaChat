@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Pattern_light.png",
+      "filename" : "Ovals_1_light.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Pattern_Dark.png",
+      "filename" : "Ovals_1_ldark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Pattern_light@2x.png",
+      "filename" : "Ovals_1_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Pattern_Dark@2x.png",
+      "filename" : "Ovals_1_ldark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Pattern_light@3x.png",
+      "filename" : "Ovals_1_light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Pattern_Dark@3x.png",
+      "filename" : "Ovals_1_ldark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
