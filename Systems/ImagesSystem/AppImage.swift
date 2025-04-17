@@ -1,11 +1,3 @@
-//
-//  Images.swift
-//  HalaChat
-//
-//  Created by Mohammed Saleh on 13/04/2025.
-//
-
-import Foundation
 import UIKit
 
 

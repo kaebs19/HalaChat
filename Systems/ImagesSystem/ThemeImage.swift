@@ -1,9 +1,3 @@
-//
-//  ThemeImage.swift
-//  HalaChat
-//
-//  Created by Mohammed Saleh on 14/04/2025.
-//
 
 import UIKit
 

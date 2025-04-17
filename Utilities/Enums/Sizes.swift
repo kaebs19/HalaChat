@@ -12,6 +12,9 @@ enum Sizes: CGFloat {
     case size_18 = 18
     case size_20 = 20
     
+    case size_32 = 32
+    
+    
     static func custom (_ size: CGFloat) -> CGFloat {
         return size
     }

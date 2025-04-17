@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Ovals_1_ldark.png",
+      "filename" : "Ovals_1_dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Ovals_1_ldark@2x.png",
+      "filename" : "Ovals_1_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Ovals_1_ldark@3x.png",
+      "filename" : "Ovals_1_dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
