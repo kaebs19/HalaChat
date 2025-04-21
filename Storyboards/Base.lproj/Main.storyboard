@@ -60,27 +60,13 @@
             </objects>
             <point key="canvasLocation" x="1046.5648854961833" y="-2.1126760563380285"/>
         </scene>
-        <!--WelcomeVC-->
-        <scene sceneID="JPl-2O-Mcd">
-            <objects>
-                <viewController storyboardIdentifier="WelcomeVC" id="gMn-Yc-wsV" customClass="WelcomeVC" customModule="HalaChat" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="RNh-L2-ts9">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="zi4-iV-53k"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PTd-ul-d9H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-902" y="-2"/>
-        </scene>
         <!--MainApp-->
         <scene sceneID="Y4v-Qk-hGr">
             <objects>
                 <tabBarController title="MainApp" automaticallyAdjustsScrollViewInsets="NO" id="7sd-PY-hdZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vxD-Ym-0jP">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

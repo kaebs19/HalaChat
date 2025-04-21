@@ -64,6 +64,62 @@ extension UIView {
     }
                    
     
+    /// إضافة تدرج خطي للخلفية باستخدام لونين أو أكثر
+    /// - Parameters:
+    ///   - colors: مصفوفة من الألوان من نوع Colors enum
+    ///   - direction: اتجاه التدرج (أفقي، عمودي، قطري، إلخ)
+    ///   - locations: مواقع الألوان في التدرج (اختياري)
+
+    func applyGradient(colors: [Colors], direction: GradientDirection = .horizontal, locations: [NSNumber]? = nil) {
+        // إزالة أي طبقة تدرج موجودة مسبقاً
+           self.layer.sublayers?.filter { $0.name == "gradientLayer" }.forEach { $0.removeFromSuperlayer() }
+           
+           // تحويل الألوان من enum إلى UIColor
+           let uiColors = colors.compactMap { $0.uitColor }
+           guard !uiColors.isEmpty else { return }
+           
+           // إنشاء طبقة التدرج
+           let gradientLayer = CAGradientLayer()
+           gradientLayer.name = "gradientLayer"
+           gradientLayer.frame = self.bounds
+           
+           // تعيين الألوان
+           gradientLayer.colors = uiColors.map { $0.cgColor }
+           
+           // تعيين مواقع الألوان إذا تم تمريرها
+           if let locations = locations {
+               gradientLayer.locations = locations
+           }
+           
+           // تعيين اتجاه التدرج
+           switch direction {
+           case .horizontal:
+               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+               gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+           case .vertical:
+               gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+               gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+           case .diagonalTopLeftToBottomRight:
+               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+               gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+           case .diagonalTopRightToBottomLeft:
+               gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+               gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
+           case .custom(let startPoint, let endPoint):
+               gradientLayer.startPoint = startPoint
+               gradientLayer.endPoint = endPoint
+           }
+           
+           // إضافة طبقة التدرج للعرض
+           self.layer.insertSublayer(gradientLayer, at: 0)
+           
+           // ربط التدرج بتغيير حجم العرض
+           self.layer.layoutIfNeeded()
+    }
+    
+    func addRadius(cornerRadius: CGFloat) {
+        self.layer.cornerRadius = cornerRadius
+    }
 
 
 }

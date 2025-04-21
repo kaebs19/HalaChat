@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 // MARK: - مدير التنقل بين واجهات التطبيق
 // مسؤول عن التعامل مع منطق الانتقال بين الواجهات وتحديد الواجهة المناسبة عند بدء التطبيق
 
@@ -103,7 +101,7 @@ class AppNavigationManager {
     /// إنشاء وحدة تحكم تسجيل الدخول
     /// - Returns: وحدة تحكم تسجيل الدخول
     private func createWelcomeViewController() -> UIViewController {
-        let storyboard = UIStoryboard(name: Storyboards.Main.rawValue, bundle: nil)
+        let storyboard = UIStoryboard(name: Storyboards.Welcome.rawValue, bundle: nil)
         let welcomeVC = storyboard.instantiateViewController(withIdentifier: Identifiers.WelcomeVC.rawValue)
         return UINavigationController(rootViewController: welcomeVC)
     }
@@ -119,8 +117,11 @@ class AppNavigationManager {
     
     /// MARK: - وظائف انتقال محددة
     func moveFromOnboardingToWelcome() {
+        // تحديث UserDefaults ليعرف أن المستخدم قد شاهد Onboarding
         UserDefault.shared.isOnboarding = true
+        // إنشاء وحدة تحكم Welcome
         let welcomeVC = createWelcomeViewController()
+        // تعيين وحدة التحكم كجذر
         setRootViewController(welcomeVC)
     }
     

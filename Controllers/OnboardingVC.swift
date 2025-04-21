@@ -25,7 +25,7 @@ class OnboardingVC: UIViewController {
     private var onboardingList: [Onboarding] = Onboarding.onbordings
     private var currentIndex: Int = 0     // لتتبع الشاشة الحالية
     
-    // MARK: - Lifecycle
+    // MARK: - LifecycleB
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,8 @@ class OnboardingVC: UIViewController {
     // MARK: - Actions
     @IBAction func skipButtonTapped(_ sender: Any) {
         print("تم الانتقال إلى الشاشة الرئيسية")
-        goToVC(identifiers: .WelcomeVC)
+        UserDefault.shared.isOnboarding = true
+        AppNavigationManager.shared.moveFromOnboardingToWelcome()
     }
     
     
@@ -81,6 +82,8 @@ extension OnboardingVC {
         
         // تخصيص صورة Next
         setupNextButton()
+        
+        imageNextView.transform = CGAffineTransform(rotationAngle: .pi)
     }
     
     private func updateCustomUIElements() {
@@ -113,7 +116,11 @@ extension OnboardingVC {
         if currentIndex < onboardingList.count {
             updateOnboardingContent(index: currentIndex, withAnimation: true)
         } else {
-            goToVC(identifiers: .WelcomeVC)
+            // تحديث UserDefaults لتسجيل أن المستخدم قد شاهد Onboarding
+
+            UserDefault.shared.isOnboarding = true
+
+            AppNavigationManager.shared.moveFromOnboardingToWelcome()
         }
     }
     

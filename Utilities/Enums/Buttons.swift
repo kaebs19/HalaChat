@@ -11,6 +11,8 @@ enum Buttons: String , LocalizableEnim {
     
     case test = "testButton"
     case skip = "skipButton"
+    case login = "loginButton"
+    case signup = "registerButton"
     
     var textBtn: String {
         return self.localized

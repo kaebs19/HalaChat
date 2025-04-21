@@ -8,11 +8,27 @@
 
 
 // --   Lables
+"FindNewLab"="Find new friends nearby";
+"FindNewSubtitleLab"="With milions of users all over the world, we gives you the ability to connect with people no matter where you are.";
 
+ "loginLabel"="Log In";
+ "registerLabel"="Sign Up";
+ "welcomeLabel"="Welcome back";
+ "welcomeSubtitleLabel"="Login to your account";
 
 
 // --   Buttons
 "HelpTitle"="Help";
 "skipButton"="Skip";
+"loginButton"="Log In";
+"registerButton"="Sign Up";
 
+
+// ---    Text Field
+
+
+// ---  Title
+
+"LoginTitle" = "Login";
+"SignUpTitle" = "Sign up";
 

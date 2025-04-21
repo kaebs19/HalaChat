@@ -37,6 +37,21 @@ extension UILabel {
                 self.adjustsFontForContentSizeCategory = adjustsFontSizeToFitWidth
             }
     
+    func customizeWithColor(text: String? , color: Colors ,ofSize: Sizes ,
+                   font: Fonts , fontStyle: FontStyle = .regular , direction: Directions = .auto,
+                   lines: Int = 1 , adjustsFontSizeToFitWidth: Bool = false)
+            {
+                
+                self.text = text ?? ""
+                self.textColor = color.uitColor
+                self.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+                
+                self.textAlignment = direction.textAlignment
+                self.numberOfLines = lines
+                self.adjustsFontForContentSizeCategory = adjustsFontSizeToFitWidth
+            }
+
+    
     /// Adds a fade-in animation to the label
     func animateTextChange(to newText: String, duration: TimeInterval = 0.3) {
         UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: {

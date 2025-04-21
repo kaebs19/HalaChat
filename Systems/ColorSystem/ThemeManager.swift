@@ -74,19 +74,36 @@ class ThemeManager {
     }
     
     // تطبيق السمة على التطبيق
+
     func applyCurrentTheme() {
         DispatchQueue.main.async {
-            guard let windowScene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return }
-        
-            windowScene.windows.forEach { window in
-                window.overrideUserInterfaceStyle = self.currentTheme.userInterfaceStyle
+            // طريقة 1: استخدام connected scenes
+            if #available(iOS 13.0, *) {
+                UIApplication.shared.connectedScenes
+                    .filter { $0 is UIWindowScene }
+                    .forEach { scene in
+                        (scene as? UIWindowScene)?.windows.forEach { window in
+                            window.overrideUserInterfaceStyle = self.currentTheme.userInterfaceStyle
+                        }
+                    }
+            } else {
+                // طريقة 2: للدعم القديم، استخدم windows من UIApplication
+                UIApplication.shared.windows.forEach { window in
+                    window.overrideUserInterfaceStyle = self.currentTheme.userInterfaceStyle
+                }
             }
             
             // إشعار المراقبين بالتغيير
             self.notifyObservers()
         }
     }
+    
+    
+    func toggleDarkMode() {
+        let newTheme: AppTheme = isDarkMode ? .light : .dark
+        setTheme(newTheme)
+    }
+
     
     // التسجيل كمراقب للتغييرات في السمة
     @discardableResult

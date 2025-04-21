@@ -1,7 +1,7 @@
 
 import UIKit
 import MOLH
-
+import SwiftMessages
 
 
 // MARK: - Theme Management - دوال إدارة السمة
@@ -74,7 +74,7 @@ extension UIViewController {
                 case .BackButton:
                     // مع استخدم الصورة
                     let backImage = AppImage.back.tintedImage(with: .primary)
-                    leftBar.append(UIBarButtonItem(image: backImage,
+                    leftBar.append(UIBarButtonItem(image: backImage?.withRenderingMode(.alwaysOriginal),
                                                    style: .plain, target: self,
                                                    action: #selector(backButtonAction)))
                     
@@ -107,7 +107,9 @@ extension UIViewController {
             }
         }
         
-        
+     
+        self.navigationItem.rightBarButtonItems = rightBar
+        self.navigationItem.leftBarButtonItems = leftBar
     }
     
     /// معالج حدث النقر على زر المساعدة في شريط التنقل.
@@ -138,6 +140,7 @@ extension UIViewController {
         print("showHelpButtonAction")
     }
 }
+
 
 // MARK: - Navigation Operations - دوال التنقل بين الواجهات
 extension UIViewController {
@@ -245,5 +248,68 @@ extension UIViewController {
         self.tabBarController?.tabBar.isHidden = isHidden
     }
     
+    /// إخفاء زر العودة (Back Button) في شريط التنقل
+    /// - Parameters:
+    ///   - isHidden: ما إذا كان سيتم إخفاء زر العودة (القيمة الافتراضية: true).
+    ///   - animated: ما إذا كان سيتم تطبيق التغيير بتأثير حركي (القيمة الافتراضية: false).
     
+    func hideBackButton(isHidden: Bool = true, animated: Bool = false) {
+        if isHidden {
+            // إخفاء زر العودة
+            navigationItem.hidesBackButton = true
+            // إزالة أي زر مخصص للرجوع في الجانب الأيسر
+            navigationItem.leftBarButtonItems = nil
+        } else {
+            // إظهار زر العودة الافتراضي
+            navigationItem.hidesBackButton = false
+        }
+        
+        if animated {
+            navigationController?.setNavigationBarHidden(false, animated: false)
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+    }
+    
+    /// استبدال زر العودة بزر مخصص أو بعنوان فارغ
+    /// - Parameters:
+    ///   - title: العنوان المراد استخدامه بدلاً من "العودة" (للتخصيص أو تركه فارغًا)
+    ///   - target: الكائن الذي سيتلقى إجراء النقر
+    ///   - action: الإجراء الذي سيتم تنفيذه عند النقر
+    func customizeBackButton(title: String? = nil, target: AnyObject? = nil, action: Selector? = nil) {
+        let backItem = UIBarButtonItem(title: title, style: .plain, target: target ?? self, action: action ?? #selector(backButtonAction))
+        // تعيين الزر كعنصر في الجانب الأيسر
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    /// تعيين زر الرجوع فارغاً (لا نص مع الاحتفاظ بالسهم)
+    func setEmptyBackButton() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        // جعل عنوان زر العودة فارغاً في الواجهة التالية
+        let backItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backItem
+
+    }
+    
+}
+
+extension UIViewController {
+    
+    /*
+     اظهار رسائل التوضيحية
+     
+     */
+    func showMessage(title: String, message: String , theme: Theme) {
+        let view = MessageView.viewFromNib(layout: .cardView)
+        view.configureTheme(theme)
+        view.configureDropShadow()
+        view.configureContent(title: title, body: message)
+        view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
+        view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        (view.backgroundView as? CornerRoundingView)?.cornerRadius = 10
+        view.button?.isHidden = true
+        // Show the message.
+        SwiftMessages.show(view: view)
+
+    }
 }

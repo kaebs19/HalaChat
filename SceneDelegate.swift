@@ -17,6 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // إنشاء نافذة جديدة مرتبطة بمشهد النافذة
         window = UIWindow(windowScene: windowScene)
+        
+        // تطبيق السمة قبل تعيين الواجهة الرئيسية
+        ThemeManager.shared.applyCurrentTheme()
+        
         // تعيين الواجهة المناسبة كواجهة جذر للتطبيق باستخدام مدير التنقل
         let initialViewController = AppNavigationManager.shared.determineInitialViewController()
         window?.rootViewController = initialViewController
@@ -37,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         
         // يتم استدعاء هذا عندما يصبح المشهد نشطًا
-        applyThemeMode()
+        ThemeManager.shared.applyCurrentTheme()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

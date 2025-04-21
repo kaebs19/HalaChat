@@ -56,7 +56,9 @@ enum ColorSet: String {
     
     // اظافية
     case C505C69 = "#C505C69"
-    
+    case C2298FF_Blue = "#2298FF"
+    case FFC107_Orange = "#FFC107"
+    case secondaryBackground = "secondaryBackground"
     
     // قيم الألوان المحددة لكل نوع في الوضع الفاتح
     var lightModeColor: UIColor {
@@ -75,6 +77,12 @@ enum ColorSet: String {
                 
                 // اظافية
             case .C505C69: return UIColor(hex: "#C505C69") ?? .systemGray2
+            case .C2298FF_Blue:return UIColor(hex: "#2298FF")?.withAlphaComponent(0.15) ?? .blue.withAlphaComponent(0.15)
+            case .FFC107_Orange:
+                return UIColor(hex: "#FFC107")?.withAlphaComponent(0.15) ?? .orange.withAlphaComponent(0.15)
+
+            case .secondaryBackground:
+                return UIColor(hex: "#8E8E93") ?? .darkGray
         }
     }
     
@@ -96,6 +104,12 @@ enum ColorSet: String {
             
                 // اظافية
             case .C505C69: return UIColor(hex: "#C505C69") ?? .systemGray2
+            case .C2298FF_Blue:
+                return UIColor(hex: "#2298FF") ?? .systemBlue
+            case .FFC107_Orange:
+                return UIColor(hex: "#C505C69") ?? .systemOrange
+            case .secondaryBackground:
+                return UIColor(hex: "#505C69") ?? .lightGray
         }
     }
     

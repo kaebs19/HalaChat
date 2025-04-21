@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class UserDefault : NSObject {
