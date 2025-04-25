@@ -1,10 +1,3 @@
-//
-//  OnboardingVC.swift
-//  HalaChat
-//
-//  Created by Mohammed Saleh on 13/04/2025.
-//
-
 import UIKit
 
 class OnboardingVC: UIViewController {
@@ -25,34 +18,31 @@ class OnboardingVC: UIViewController {
     private var onboardingList: [Onboarding] = Onboarding.onbordings
     private var currentIndex: Int = 0     // لتتبع الشاشة الحالية
     
-    // MARK: - LifecycleB
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // تسجيل للاستماع لتغييرات الثيم
+        registerForThemeChanges()
+        
         setupUI()
         
         // عرض أول شاشة onboarding
         updateOnboardingContent(index: currentIndex)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // إعداد مراقب للسمة عند ظهور العرض
-        themeObserverId = setupThemeObserver { [weak self] in
-            // تحديث أي عناصر خاصة عند تغيير السمة
-            self?.updateCustomUIElements()
-        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // إلغاء مراقبة تغييرات الثيم
+        unregisterFromThemeChanges()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // تنظيف المراقب عند اختفاء العرض
-        clearThemeObserver(id: themeObserverId)
-    }
-    
-    deinit {
-        // تأكيد إضافي على تنظيف الموارد
-        clearThemeObserver(id: themeObserverId)
+    // تنفيذ عند تغيير الثيم
+    override func themeDidChange() {
+        super.themeDidChange()
+        updateCustomUIElements()
     }
     
     // MARK: - Actions
@@ -61,8 +51,6 @@ class OnboardingVC: UIViewController {
         UserDefault.shared.isOnboarding = true
         AppNavigationManager.shared.moveFromOnboardingToWelcome()
     }
-    
-    
 }
 
 
@@ -86,21 +74,33 @@ extension OnboardingVC {
         imageNextView.transform = CGAffineTransform(rotationAngle: .pi)
     }
     
+    private func setupThemeColors() {
+        // تطبيق الألوان الأساسية
+        view.setThemeBackgroundColor(.background)
+        mainView.setThemeBackgroundColor(.background)
+        imageNextView.setThemeTintColor(.primary)
+    }
+    
     private func updateCustomUIElements() {
-        mainView.setThemeBackground(.background)
-        skipButton.customize(title: .skip, titleColorSet: .C505C69, ofSize: .size_14, font: .poppins , fontStyle: .regular)
+        // تحديث ألوان العناصر
+        skipButton.customize(
+            title: .skip,
+            titleColor: .text,
+            ofSize: .size_14,
+            font: .poppins,
+            fontStyle: .regular
+        )
+        
         // تخصيص تأثيرات الانتقال للصورة
         animitionIMageView.contentMode = .scaleAspectFit
         animitionIMageView.clipsToBounds = true
-        
     }
     
     private func setupNextButton() {
-       imageNextView.tintColor = ThemeManager.shared.color(.primary)
+        imageNextView.tintColor = ThemeManager.shared.color(.primary)
         // تدوير السهم ليشير إلى اليمين (التالي) بدلاً من الخلف
-       // imageNextView.transform = CGAffineTransform(rotationAngle: .pi)
+        // imageNextView.transform = CGAffineTransform(rotationAngle: .pi)
     }
-    
     
     private func setupTapGestures() {
         nextView.isUserInteractionEnabled = true
@@ -117,16 +117,14 @@ extension OnboardingVC {
             updateOnboardingContent(index: currentIndex, withAnimation: true)
         } else {
             // تحديث UserDefaults لتسجيل أن المستخدم قد شاهد Onboarding
-
             UserDefault.shared.isOnboarding = true
-
             AppNavigationManager.shared.moveFromOnboardingToWelcome()
         }
     }
     
     // تحديث محتوى شاشة onboarding
-    private func updateOnboardingContent(index: Int , withAnimation: Bool = false) {
-        guard  index < onboardingList.count else { return }
+    private func updateOnboardingContent(index: Int, withAnimation: Bool = false) {
+        guard index < onboardingList.count else { return }
         
         let onboarding = onboardingList[index]
         
@@ -148,16 +146,19 @@ extension OnboardingVC {
                 self.datilsLabel.text = onboarding.description
                 
                 self.titleLabel.customize(text: onboarding.title,
-                                          colorSet: .text,
-                                          ofSize: .size_32,
-                                          font: .poppins , fontStyle: .bold
-                                          ,direction: .Center)
+                                         color: .text,
+                                         ofSize: .size_32,
+                                         font: .poppins,
+                                         fontStyle: .bold,
+                                         direction: .Center)
                 
                 self.datilsLabel.customize(text: onboarding.description,
-                                           colorSet: .text, ofSize: .size_16,
-                                           font: .poppins , fontStyle: .regular,
-                                           direction: .Center , lines: 3)
-                
+                                          color: .text,
+                                          ofSize: .size_16,
+                                          font: .poppins,
+                                          fontStyle: .regular,
+                                          direction: .Center,
+                                          lines: 3)
                 
                 UIView.animate(withDuration: 0.3) {
                     self.titleLabel.alpha = 1
@@ -176,11 +177,9 @@ extension OnboardingVC {
             // إظهار زر التخطي فقط إذا لم نكن في الشاشة الأخيرة
             skipButton.isHidden = (index == onboardingList.count - 1)
         }
-                
     }
     
     // أنيميشن لزر التالي
-    
     private func animateNextButton() {
         // تأثير نبض للزر
         UIView.animate(withDuration: 0.2, animations: {
@@ -193,6 +192,4 @@ extension OnboardingVC {
             }
         })
     }
-    
 }
-

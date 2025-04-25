@@ -11,8 +11,9 @@
 "FindNewSubtitleLab"="مع الكثير من المستخدمين في جميع أنحاء العالم، نمنحك القدرة على التواصل مع الأشخاص أينما كنت.";
 "loginLabel"="تسجيل دخول";
 "registerLabel"="انشاء حساب جديد";
-"welcomeLabel"="مرحباً بعوتك مرة اخرى";
-"welcomeSubtitleLabel"="تسجيل الدخول إلى الحساب الخاص بك.";
+"welcomeLabel"="ياهلا فيك بعوتك مرة اخرى";
+"welcomeSubtitleLabel"="قم بالتسجيل الدخول إلى الحساب الخاص بك من جديد.";
+"createAccountLabel"="انشاء حساب جديد";
 
 
 
@@ -23,6 +24,8 @@
 "registerButton"="انشاء حساب";
 
 // ---    Text Field
+
+"test" = "تجربة النص";
 
 
 // ---  Title

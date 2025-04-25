@@ -62,11 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 
     // تطبيق وضع العرض (داكن/فاتح) حسب تفضيل المستخدم
-    private func applyThemeMode() {
-        let isDarkMode = UserDefault.shared.isThemeDarkLightMode
-        window?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
-    }
-    
+
 
 }
 

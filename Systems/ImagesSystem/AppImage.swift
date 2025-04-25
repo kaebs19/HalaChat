@@ -24,7 +24,7 @@ enum AppImage: String , CaseIterable {
     
     /// الحصول على كائن UIImage مع لون من نظام الألوان في التطبيق
     
-    func tintedImage(with colorSet: ColorSet) -> UIImage? {
+    func tintedImage(with colorSet: AppColors) -> UIImage? {
         let color = ThemeManager.shared.color(colorSet)
         return tintedImage(with: color)
     }

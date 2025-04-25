@@ -1,8 +1,9 @@
 
 import UIKit
 
-/// أحجام النصوص المستخدمة
-
+/*
+ أحجام النصوص المستخدمة
+*/
 enum Sizes: CGFloat {
     
     case size_10 = 10

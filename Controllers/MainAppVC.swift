@@ -32,7 +32,6 @@ class MainAppVC: UIViewController {
 extension MainAppVC {
     
     private func setupUI() {
-        titleLabel.customize(text: "ياسمين", colorSet: .text, ofSize: .size_20, font: .poppins,fontStyle: .bold)
-        self.view.setThemeBackground(.background)
+        
     }
 }

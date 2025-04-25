@@ -68,3 +68,23 @@ class UserDefault : NSObject {
     }
     
 }
+
+
+extension UserDefault {
+    
+    var themeModeRawValue: Int {
+        
+        get {
+            return defaults.integer(forKey: "app_theme_mode")
+        }
+        set {
+            defaults.set(newValue, forKey: "app_theme_mode")
+            // تحديث isThemeDarkLightMode للتوافق مع الشيفرة القديمة
+            
+            let themeMode = ThemeManager.ThemeMode(rawValue: newValue)  ?? .auto
+            self.isThemeDarkLightMode = themeMode == .dark
+        }
+    }
+    
+    
+}

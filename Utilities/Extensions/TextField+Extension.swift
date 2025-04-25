@@ -5,85 +5,109 @@ import UIKit
 extension UITextField {
     
     
-    // تطبيق لون النص والخلفية المتوافق مع السمة
-    
-    func setThemeTextColor(_ setColor: ColorSet) {
-        // تطبيق لون النص المتوافق مع السمة
-        removeThemeObserver(forKey: &AssociatedKeys.themeObserver)
+    /// تعيين لون النص مع دعم السمات
+    func setThemeTextColor(_ colorSet: AppColors) {
+        // إلغاء المراقب السابق إذا وجد
+        removeThemeObserver(forKey: &AssociatedKeys.textColorThemeObserver)
         
         // تعيين اللون الحالي
-        textColor = ThemeManager.shared.color(setColor)
+        textColor = ThemeManager.shared.color(colorSet)
         
         // إضافة مراقب جديد
         let observer = ThemeManager.shared.addThemeObserver { [weak self] in
-            self?.textColor = ThemeManager.shared.color(setColor)
+            self?.textColor = ThemeManager.shared.color(colorSet)
         }
         
         // تخزين المعرف مع العنصر
-        setThemeObserver(id: observer, forKey: &AssociatedKeys.themeObserver)
-
+        setThemeObserver(id: observer, forKey: &AssociatedKeys.textColorThemeObserver)
     }
     
-    
-    
-    func setThemePlaceholderColor(_ colorSet: ColorSet) {
-
+    /// تعيين لون النص الافتراضي مع دعم السمات
+    func setThemePlaceholderColor(_ colorSet: AppColors) {
         // إلغاء المراقب السابق إذا وجد
         removeThemeObserver(forKey: &AssociatedKeys.placeholderThemeObserver)
         
-        if let placeholder = self.placeholder {
-            let font = self.font ?? UIFont.systemFont(ofSize: 14)
-            
+        // تحديث النص الافتراضي
+        updatePlaceholderColor(ThemeManager.shared.color(colorSet))
+        
+        // إضافة مراقب جديد
+        let observer = ThemeManager.shared.addThemeObserver { [weak self] in
+            self?.updatePlaceholderColor(ThemeManager.shared.color(colorSet))
+        }
+        
+        // تخزين المعرف مع العنصر
+        setThemeObserver(id: observer, forKey: &AssociatedKeys.placeholderThemeObserver)
+    }
+    
+    /// تحديث لون النص الافتراضي
+    private func updatePlaceholderColor(_ color: UIColor) {
+        if let placeholder = placeholder {
             attributedPlaceholder = NSAttributedString(
                 string: placeholder,
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: ThemeManager.shared.color(colorSet),
-                    NSAttributedString.Key.font: font
-                ]
-                )
-            
-            // إضافة مراقب جديد
-            let observer = ThemeManager.shared.addThemeObserver { [weak self] in
-                if let placeholder = self?.placeholder , let font = self?.font {
-                    self?.attributedPlaceholder = NSAttributedString(
-                        string: placeholder,
-                        attributes: [
-                            NSAttributedString.Key.foregroundColor: ThemeManager.shared.color(colorSet),
-                            NSAttributedString.Key.font: font
-                        ])
-                }
-                
-            }
-            
-            // تخزين المعرف مع العنصر
-            setThemeObserver(id: observer, forKey: &AssociatedKeys.placeholderThemeObserver)
-
+                attributes: [NSAttributedString.Key.foregroundColor: color]
+            )
         }
     }
+
+    
 
     /// تخصيص النص في - TextFields
-    func customize(text: TextFields? = nil, placeholder: String? = nil,
-    textColorSet: ColorSet, placeholderColorSet: ColorSet? = nil, backgroundColorSet: ColorSet? = nil ,
-                   ofSize: Sizes,
-                   font: Fonts , fontStyle: FontStyle = .regular ,
-                   directionL: Directions = .auto
-    ) {
-        self.text = text?.textTF ?? self.text
+    /// إعداد حقل النص بالكامل
+    func customize(placeholder: String? = nil,
+               text: String? = nil,
+               textColor: AppColors,
+               placeholderColor: AppColors? = nil,
+               backgroundColor: AppColors? = nil,
+               borderColor: AppColors? = nil,
+               cornerRadius: CGFloat = 0,
+               borderWidth: CGFloat = 0,
+               font: UIFont? = nil,
+               padding: UIEdgeInsets? = nil) {
+        
+        // تعيين النص والنص الافتراضي
+        self.text = text
         if let placeholder = placeholder {
             self.placeholder = placeholder
-            self.setThemePlaceholderColor(placeholderColorSet ?? .text)
         }
         
-        self.setThemeTextColor(textColorSet)
+        // تعيين لون النص
+        setThemeTextColor(textColor)
         
-        if let backgroundColorSet =  backgroundColorSet {
-            self.setThemePlaceholderColor(backgroundColorSet)
+        // تعيين لون النص الافتراضي
+        if let placeholderColor = placeholderColor {
+            setThemePlaceholderColor(placeholderColor)
         }
         
-        self.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
-        self.textAlignment = directionL.textAlignment
+        // تعيين لون الخلفية
+        if let backgroundColor = backgroundColor {
+            setThemeBackgroundColor(backgroundColor)
+        }
+        
+        // تعيين الحدود
+        if let borderColor = borderColor, borderWidth > 0 {
+            setThemeBorderColor(borderColor, width: borderWidth)
+        }
+        
+        // تعيين الزوايا المنحنية
+        if cornerRadius > 0 {
+            addRadius(cornerRadius)
+        }
+        
+        // تعيين الخط
+        if let font = font {
+            self.font = font
+        }
+        
+        // تعيين الهوامش الداخلية
+        if let padding = padding {
+            let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: padding.left, height: bounds.height))
+            leftView = leftPaddingView
+            leftViewMode = .always
+            
+            let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: padding.right, height: bounds.height))
+            rightView = rightPaddingView
+            rightViewMode = .always
+        }
     }
-    
-    
- 
+
 }

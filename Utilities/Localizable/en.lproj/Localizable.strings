@@ -15,7 +15,7 @@
  "registerLabel"="Sign Up";
  "welcomeLabel"="Welcome back";
  "welcomeSubtitleLabel"="Login to your account";
-
+"createAccountLabel"="Create an account";
 
 // --   Buttons
 "HelpTitle"="Help";
@@ -25,7 +25,7 @@
 
 
 // ---    Text Field
-
+"test" = "test";
 
 // ---  Title
 

@@ -4,32 +4,32 @@ import UIKit
 
 extension UILabel {
     
-    // تطبيق لون النص المتوافق مع السمة
-       func setThemeTextColor(_ colorSet: ColorSet) {
-           // إلغاء المراقب السابق إذا وجد
-           removeThemeObserver(forKey: &AssociatedKeys.themeObserver)
-           
-           // تعيين اللون الحالي
-           textColor = ThemeManager.shared.color(colorSet)
-           
-           // إضافة مراقب جديد
-           let observer = ThemeManager.shared.addThemeObserver { [weak self]  in
-               self?.textColor = ThemeManager.shared.color(colorSet)
-           }
-           
-           // تخزين المعرف مع العنصر
-           setThemeObserver(id: observer, forKey: &AssociatedKeys.themeObserver)
-
-       }
+    /// تعيين لون النص مع دعم السمات
+    func setThemeTextColor(_ colorSet: AppColors) {
+        // إلغاء المراقب السابق إذا وجد
+        removeThemeObserver(forKey: &AssociatedKeys.textColorThemeObserver)
+        
+        // تعيين اللون الحالي
+        textColor = ThemeManager.shared.color(colorSet)
+        
+        // إضافة مراقب جديد
+        let observer = ThemeManager.shared.addThemeObserver { [weak self] in
+            self?.textColor = ThemeManager.shared.color(colorSet)
+        }
+        
+        // تخزين المعرف مع العنصر
+        setThemeObserver(id: observer, forKey: &AssociatedKeys.textColorThemeObserver)
+}
+    
     
     /// دالة تخصيص نصوص  - UILable
-    func customize(text: String? , colorSet: ColorSet ,ofSize: Sizes ,
+    func customize(text: String? , color: AppColors ,ofSize: Sizes ,
                    font: Fonts , fontStyle: FontStyle = .regular , direction: Directions = .auto,
                    lines: Int = 1 , adjustsFontSizeToFitWidth: Bool = false)
             {
                 
                 self.text = text ?? ""
-                self.setThemeTextColor(colorSet)
+                self.textColor = color.color
                 self.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
                 
                 self.textAlignment = direction.textAlignment
@@ -37,13 +37,13 @@ extension UILabel {
                 self.adjustsFontForContentSizeCategory = adjustsFontSizeToFitWidth
             }
     
-    func customizeWithColor(text: String? , color: Colors ,ofSize: Sizes ,
+    func customizeWithColor(text: String? , color: AppColors ,ofSize: Sizes ,
                    font: Fonts , fontStyle: FontStyle = .regular , direction: Directions = .auto,
                    lines: Int = 1 , adjustsFontSizeToFitWidth: Bool = false)
             {
                 
                 self.text = text ?? ""
-                self.textColor = color.uitColor
+                self.textColor = color.color
                 self.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
                 
                 self.textAlignment = direction.textAlignment

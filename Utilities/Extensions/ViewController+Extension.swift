@@ -15,9 +15,27 @@ extension UIViewController {
     /// - **Note**: يتم استدعاء هذه الدالة تلقائياً عند تغيير السمة في التطبيق.
     
     func applyTheme() {
-        view.setThemeBackground(.background)
-        ThemeManager.shared.applyTheme(to: view)
+        updateViewColors()
     }
+    
+    
+    /// تحديث ألوان العناصر الرئيسية
+    private func updateViewColors() {
+        // تطبيق الألوان على العناصر الرئيسية
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.tintColor = ThemeManager.shared.color(.primary)
+            navigationBar.barTintColor = ThemeManager.shared.color(.background)
+            
+            // تحديث لون النص في شريط التنقل
+            navigationBar.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: ThemeManager.shared.color(.text)
+            ]
+        }
+        
+        // تحديث لون النص في حالة العرض
+        setNeedsStatusBarAppearanceUpdate()
+    }
+
     
     /// إعداد مراقبة تغييرات السمة
     ///     /// يقوم بإعداد مراقب لتغييرات السمة وتنفيذ إجراء عند حدوث التغيير.
@@ -57,61 +75,60 @@ extension UIViewController {
     ///   - textColor: لون النص في شريط التنقل (القيمة الافتراضية: .text).
     ///   - tintColor: لون العناصر التفاعلية في شريط التنقل (القيمة الافتراضية: .primary).
     
-    func setupNavigationBar(items: [NavigationBar] ) {
+    func setupNavigationBar(items: [NavigationBar]) {
         
         var rightBar: [UIBarButtonItem] = []
         var leftBar: [UIBarButtonItem] = []
         
         for item in items {
             switch item {
-
+                    
                 case .Help:
                     // نص فقط بدون استخدم صور
                     rightBar.append(UIBarButtonItem(title: Titles.Help.localized,
-                                                   style: .plain, target: self,
-                                                   action: #selector(showHelpButtonAction)))
+                                                    style: .plain, target: self,
+                                                    action: #selector(showHelpButtonAction)))
                     
                 case .BackButton:
                     // مع استخدم الصورة
-                    let backImage = AppImage.back.tintedImage(with: .primary)
+                    let backImage = AppImage.back.tintedImage(with: ThemeManager.shared.color(.primary))
                     leftBar.append(UIBarButtonItem(image: backImage?.withRenderingMode(.alwaysOriginal),
                                                    style: .plain, target: self,
                                                    action: #selector(backButtonAction)))
                     
                 case .SearchBar:
-                    let searchImage = AppImage.search.tintedImage(with: .primary)
+                    let searchImage = AppImage.search.tintedImage(with: ThemeManager.shared.color(.primary))
                     leftBar.append(UIBarButtonItem(image: searchImage,
                                                    style: .plain, target: self,
                                                    action: #selector(showSearchButtonAction)))
                     
                 case .Notification:
-                    let notificationImage = AppImage.notification.tintedImage(with: .primary)
+                    let notificationImage = AppImage.notification.tintedImage(with: ThemeManager.shared.color(.primary))
                     rightBar.append(UIBarButtonItem(image: notificationImage,
                                                     style: .plain, target: self,
                                                     action: #selector(showNotificationButtonAction)))
                 case .More:
-                    let moreImage = AppImage.more.tintedImage(with: .primary)
+                    let moreImage = AppImage.more.tintedImage(with: ThemeManager.shared.color(.primary))
                     rightBar.append(UIBarButtonItem(image: moreImage,
                                                     style: .plain, target: self,
                                                     action: #selector(showMoreButtonAction)))
                 case .list:
-                    let listImage = AppImage.list.tintedImage(with: .primary)
+                    let listImage = AppImage.list.tintedImage(with: ThemeManager.shared.color(.primary))
                     rightBar.append(UIBarButtonItem(image: listImage,
                                                     style: .plain, target: self,
                                                     action: #selector(showListButtonAction)))
                 case .Close:
-                    let closeImage = AppImage.close.tintedImage(with: .primary)
+                    let closeImage = AppImage.close.tintedImage(with: ThemeManager.shared.color(.primary))
                     leftBar.append(UIBarButtonItem(image: closeImage,
                                                    style: .plain, target: self,
                                                    action: #selector(backButtonAction)))
             }
         }
         
-     
         self.navigationItem.rightBarButtonItems = rightBar
         self.navigationItem.leftBarButtonItems = leftBar
     }
-    
+
     /// معالج حدث النقر على زر المساعدة في شريط التنقل.
     
     @objc func showHelpButtonAction() {
@@ -287,7 +304,7 @@ extension UIViewController {
         // جعل عنوان زر العودة فارغاً في الواجهة التالية
         let backItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backItem
-
+        
     }
     
 }
@@ -304,12 +321,115 @@ extension UIViewController {
         view.configureDropShadow()
         view.configureContent(title: title, body: message)
         view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-
+        
         view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         (view.backgroundView as? CornerRoundingView)?.cornerRadius = 10
         view.button?.isHidden = true
         // Show the message.
         SwiftMessages.show(view: view)
+        
+    }
+}
+
+
+// MARK -- Title
+extension UIViewController {
+    
+    /// تعيين عنوان منسق للشاشة
+    ///
+    /// - Parameters:
+    ///   - title: النص المراد عرضه
+    ///   - color: لون النص (اختياري، افتراضي: .text)
+    ///   - fontFamily: عائلة الخط (اختياري، يستخدم الخط حسب اللغة الحالية)
+    ///   - fontStyle: نمط الخط (اختياري، افتراضي: .semiBold)
+    ///   - fontSize: حجم الخط (اختياري، افتراضي: .size_16)
+    ///   - alignment: محاذاة النص (اختياري، افتراضي: حسب اتجاه اللغة)
+    
+    func setStyledTitle(title: Titles,
+                        Color: AppColors = .text,
+                        font: Fonts? = .poppins,
+                        fontStyle: FontStyle = .semiBold,
+                        FontSize: Sizes = .size_16,
+                        alignment: NSTextAlignment? = nil) {
+        
+        // إنشاء عنصر label للعنوان
+        let titleLabel = UILabel()
+        titleLabel.text = title.textTitle
+        
+        // تعيين اللون حسب وضع التطبيق (فاتح/مظلم)
+        titleLabel.textColor = ColorTheme.current == .dark ? Color.darkModeColor : Color.lightModeColor
+        
+        // تعيين الخط
+        if let font = font {
+            titleLabel.font = FontManager.shared.font(family: font, style: fontStyle, size: FontSize)
+        } else {
+            titleLabel.font = FontManager.shared.fontForCurrentLanguage(style: fontStyle, size: FontSize)
+        }
+        
+        // تعيين المحاذاة
+        if let alignment = alignment {
+            titleLabel.textAlignment = alignment
+        } else {
+            titleLabel.textAlignment = isEnglish() ? .right : .left
+        }
+        // تعيين عنصر العنوان في شريط التنقل
+        navigationItem.titleView = titleLabel
+    }
+             
+    
+    /// تعيين عنوان منسق من مجموعة النصوص
+    ///
+    /// مثال الاستخدام: `setStyledTitle(Titles.SignUp.textTitle, color: .primary)`
+    ///
+    /// - Parameters:
+    ///   - textKey: المفتاح المرجعي للنص من مجموعة Titles
+    ///   - color: لون النص (اختياري، افتراضي: .text)
+    ///   - fontFamily: عائلة الخط (اختياري، يستخدم الخط حسب اللغة الحالية)
+    ///   - fontStyle: نمط الخط (اختياري، افتراضي: .semiBold)
+    ///   - fontSize: حجم الخط (اختياري، افتراضي: .size_16)
+    ///   - alignment: محاذاة النص (اختياري، افتراضي: حسب اتجاه اللغة)
+    func setStyledTitle ( textKey: String,
+                           color: AppColors = .text,
+                           fontFamily: String? = nil,
+                          fontStyle: FontStyle = .semiBold,
+                           fontSize: Sizes = .size_16,
+                           alignment: NSTextAlignment = .natural){
+
+        setStyledTitle(textKey: textKey, color: color, fontFamily: fontFamily, fontStyle: fontStyle, fontSize: fontSize, alignment: alignment)
 
     }
+        
+  
+     
+    
+}
+
+
+extension UIViewController {
+    /// أضف مراقب لتغيير الثيم
+    func registerForThemeChanges() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(themeDidChange),
+            name: ThemeManager.themeChangedNotification,
+            object: nil
+        )
+    }
+    
+    /// إلغاء المراقبة عند الانتهاء
+    func unregisterFromThemeChanges() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: ThemeManager.themeChangedNotification,
+            object: nil
+        )
+    }
+    
+    /// استدعاء عند تغيير الثيم
+    @objc func themeDidChange() {
+        view.updateColors()
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    
 }

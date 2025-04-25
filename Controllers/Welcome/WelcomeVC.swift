@@ -13,15 +13,14 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var patternImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet var loginView: UIView!
+    @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var signupView: UIView!
     @IBOutlet weak var loginLaibel: UILabel!
     @IBOutlet weak var signupLaibel: UILabel!
-    
+    @IBOutlet weak var loginButton: UIButton!
     
     // MARK: - Variables - Arry
     private var themeObserverId: UUID?
-    private var signupViewThemeObserver: UUID?
 
     
     // MARK: - Lifecycle
@@ -44,26 +43,18 @@ class WelcomeVC: UIViewController {
         super.viewDidDisappear(animated)
         // تنظيف وازالة العناصر
         clearThemeObserver(id: themeObserverId)
-        if let observer = signupViewThemeObserver {
-            ThemeManager.shared.removeThemeObserver(id: observer)
-            signupViewThemeObserver = nil
-        }
 
     }
     
     deinit {
         // تأكيد إضافي على تنظيف الموارد
         clearThemeObserver(id: themeObserverId)
-        
-        if let observer = signupViewThemeObserver {
-            ThemeManager.shared.removeThemeObserver(id: observer)
-            signupViewThemeObserver = nil
-        }
+     
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        updateCustomUIElements()
     }
     
     // MARK: - Actions
@@ -71,89 +62,34 @@ class WelcomeVC: UIViewController {
     
 }
 
-// MARK: - UI Setup
 extension WelcomeVC {
     
     private func setupUI() {
-        
-        applyTheme()
-        
-        hideBackButton()  // إخفاء زر العودة
         updateCustomUIElements()
-    
-        // Action
-        setupTapGestures()
     }
     
     private func updateCustomUIElements() {
-        patternImageView.semanticContentAttribute = .forceLeftToRight
-        // تنسيق العناوين
-        titleLabel.customize(text: Lables.findNew.textLib,
-                             colorSet: .text, ofSize: .size_32,
-                             font: .poppins, fontStyle: .extraBold,
-                             direction: .auto, lines: 2)
-        titleLabel.backgroundColor = .clear
-        subtitleLabel.customize(text: Lables.findNewSubtitle.textLib,
-                                colorSet: .text, ofSize: .size_16,
-                                font: .cairo,
-                                direction: .auto, lines: 0)
-        subtitleLabel.backgroundColor = .clear
+        titleLabel.customize(text: Lables.welcome.textLib,
+                             color: .text, ofSize: .size_20,
+                             font: .poppins , fontStyle: .extraBold)
+        subtitleLabel.customize(text: Lables.welcomeSubtitle.textLib,
+                             color: .text, ofSize: .size_16,
+                             font: .poppins , fontStyle: .bold)
         
-        loginLaibel.customizeWithColor(text: Lables.login.textLib,
-                                       color: .CFFFFFF, ofSize: .size_18, font: .poppins ,fontStyle: .extraBold)
+        setupViews()
         
-        signupLaibel.customizeWithColor(text: Lables.signup.textLib,
-                                        color: .CFF2D55, ofSize: .size_18, font: .poppins ,fontStyle: .extraBold)
-        
-        signupLaibel.backgroundColor = .clear
-        loginLaibel.backgroundColor = .clear
-        
-        [loginView , signupView].forEach { view in
-            view.layer.cornerRadius = 25
-            view.clipsToBounds = true
-        }
-        loginView.applyGradient(colors: [.CF54B64_Start , .CF78361_End] , direction: .horizontal)
-        signupView.backgroundColor = ThemeManager.shared.isDarkMode ?
-            Colors.CFFFFFF.uitColor : // لون أبيض في الوضع الداكن
-            UIColor.black            // لون أسود في الوضع الفاتح
-
+        setupButton()
     }
     
-    
-    private func setupButtonLabels() {
-        // إزالة أي خلفية للنصوص
-        [loginLaibel , signupView].forEach { lable in
-            lable?.backgroundColor  = .clear
-        }
-    }
-    
-    private func setupTapGestures() {
-        // إعداد مستمع النقر لزر تسجيل الدخول
-
-        loginView.isUserInteractionEnabled = true
-        let loginAction = UITapGestureRecognizer(target: self, action: #selector(handleLogin))
-        loginView.addGestureRecognizer(loginAction)
+    private func setupViews() {
+        loginView.applyGradient(startColor: .Start, endColor: .End ,direction: .diagonalTopRightToBottomLeft)
+        loginView.addRadius(15)
         
-        // إعداد مستمع النقر لزر إنشاء الحساب
-
-        signupView.isUserInteractionEnabled = true
-        let signupAction = UITapGestureRecognizer(target: self, action: #selector(handleSignup))
-        signupView.addGestureRecognizer(signupAction)
-
-    }
-
-    
-    
-    @objc private func handleLogin() {
-        print("handleLogin")
-        goToVC(storyboard: .Welcome , identifiers: .LoginVC)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-
+        signupView.applyGradient(startColor: .BlueStart, endColor: .BlueEnd , direction: .diagonalTopLeftToBottomRight ,respectDarkMode: true)
+        signupView.addRadius(15)
     }
     
-    @objc private func handleSignup() {
-        print("handleSignup")
-       // UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        goToVC(storyboard: .Welcome , identifiers: .SignUpVC)
+    private func setupButton() {
+        loginButton.backgroundColor = AppColors.background.color
     }
 }

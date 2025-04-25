@@ -66,7 +66,6 @@ extension LoginVC {
         // تطبيق السمة العامة
 
         applyTheme()
-        view.setThemeBackground(.background)
         
         setupNavigationBar(items: [.BackButton])
 
@@ -86,25 +85,12 @@ extension LoginVC {
     
     private func updateCustomUIElements() {
         
-        titleLabel.customize(text: Lables.welcome.textLib,
-                             colorSet: .text,
-                             ofSize: .size_32, font: .poppins , fontStyle: .extraBold)
-        titleLabel.backgroundColor = .clear
-        
-        subtitleLabel.customize(text: Lables.welcomeSubtitle.textLib,
-                             colorSet: .text,
-                                ofSize: .size_16, font: .poppins , fontStyle: .extraBold)
-        titleLabel.backgroundColor = .clear
 
     }
     
     func setupView() {
-       // emailView.setThemeBackground(.background)
-        emailView.backgroundColor = .clear
-        passwordView.setThemeBackground(.secondaryBackground)
     }
     
     func setupTextFields() {
-        emailTextField.backgroundColor = .clear
     }
 }

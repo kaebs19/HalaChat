@@ -1,32 +1,53 @@
 import UIKit
 
 extension UIColor {
-    convenience init?(hex: String, alpha: CGFloat = 1.0) {
-        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+    /// إنشاء لون من كود هيكس
+    static func color(fromHex hex: String, alpha: CGFloat = 1.0) -> UIColor {
+        var hexFormatted = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexFormatted = hexFormatted.replacingOccurrences(of: "#", with: "")
         
-        var rgb: UInt64 = 0
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
         
-        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(rgbValue & 0x0000FF) / 255.0
         
-        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-        let blue = CGFloat(rgb & 0x0000FF) / 255.0
-        
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    // تحويل UIColor إلى قيمة hex
-    var hexString: String {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
+    /// دمج لونين بنسبة معينة
+    func blend(with color: UIColor, ratio: CGFloat = 0.5) -> UIColor {
+        let ratio = max(0, min(1, ratio))
         
-        getRed(&r, green: &g, blue: &b, alpha: &a)
+        var r1: CGFloat = 0, g1: CGFloat = 0, b1: CGFloat = 0, a1: CGFloat = 0
+        var r2: CGFloat = 0, g2: CGFloat = 0, b2: CGFloat = 0, a2: CGFloat = 0
         
-        let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
+        self.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
+        color.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
         
-        return String(format: "#%06x", rgb)
+        return UIColor(
+            red: r1 * (1 - ratio) + r2 * ratio,
+            green: g1 * (1 - ratio) + g2 * ratio,
+            blue: b1 * (1 - ratio) + b2 * ratio,
+            alpha: a1 * (1 - ratio) + a2 * ratio
+        )
     }
+    
+    convenience init?(hex: String) {
+            var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+            
+            if hexSanitized.hasPrefix("#") {
+                hexSanitized.remove(at: hexSanitized.startIndex)
+            }
+            
+            var rgb: UInt64 = 0
+            guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
+            
+            let r = CGFloat((rgb & 0xFF0000) >> 16) / 255
+            let g = CGFloat((rgb & 0x00FF00) >> 8) / 255
+            let b = CGFloat(rgb & 0x0000FF) / 255
+            
+            self.init(red: r, green: g, blue: b, alpha: 1.0)
+        }
 }

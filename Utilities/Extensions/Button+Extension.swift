@@ -1,11 +1,9 @@
-
 import UIKit
 
 extension UIButton {
     
-    // تطبيق لون النص والخلفية المتوافق مع السمة
-    func setThemeTitleColor(_ colorSet: ColorSet , for state: UIControl.State = .normal) {
-        
+    // تطبيق لون النص المتوافق مع السمة
+    func setThemeTitleColor(_ colorSet: AppColors, for state: UIControl.State = .normal) {
         // إلغاء المراقب السابق إذا وجد
         removeThemeObserver(forKey: &AssociatedKeys.themeObserver)
         
@@ -19,37 +17,29 @@ extension UIButton {
         
         // تخزين المعرف مع العنصر
         setThemeObserver(id: observer, forKey: &AssociatedKeys.themeObserver)
-        
     }
     
-    
-    
-    /// تخصيص النص في Button
-    func customize(title: Buttons? = nil,
-                   titleColorSet:ColorSet, backgroundColorSet:ColorSet? = nil,
-                   ofSize: Sizes,
-                   font: Fonts , fontStyle: FontStyle = .regular,
-                   state: UIControl.State = .normal
-                   
-    ) {
-        if let title = title {
-            self.setTitle(title.textBtn, for: state)
-        }
-        self.setThemeTitleColor(titleColorSet, for: state)
+    // تطبيق لون الخلفية المتوافق مع السمة
+    func setButtonBackgroundColor(_ colorSet: AppColors) {
+        // إلغاء المراقب السابق إذا وجد
+        removeThemeObserver(forKey: &AssociatedKeys.backgroundThemeObserver)
         
-        if let backgroundColorSet = backgroundColorSet {
-            self.setThemeBackgroundColor(backgroundColorSet)
+        // تعيين اللون الحالي
+        backgroundColor = ThemeManager.shared.color(colorSet)
+        
+        // إضافة مراقب جديد
+        let observer = ThemeManager.shared.addThemeObserver { [weak self] in
+            self?.backgroundColor = ThemeManager.shared.color(colorSet)
         }
         
-        
-        self.titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle , size: ofSize)
+        // تخزين المعرف مع العنصر
+        setThemeObserver(id: observer, forKey: &AssociatedKeys.backgroundThemeObserver)
     }
     
     // إضافة تأثير ضغط للزر
-    
     func addPressAnimation() {
         addTarget(self, action: #selector(buttonPressed), for: .touchDown)
-        addTarget(self, action: #selector(buttonReleased), for: [.touchUpInside , .touchUpOutside , .touchCancel])
+        addTarget(self, action: #selector(buttonReleased), for: [.touchUpInside, .touchUpOutside, .touchCancel])
     }
     
     @objc func buttonPressed() {
@@ -66,88 +56,122 @@ extension UIButton {
         }
     }
     
-    /// اظافة زوايا منحنية الاطراف
-    func addRadisButton(cornerRadius: CGFloat) {
+    /// إضافة زوايا منحنية
+    func addCornerRadius(_ cornerRadius: CGFloat) {
         self.layer.cornerRadius = cornerRadius
+        self.clipsToBounds = cornerRadius > 0
     }
     
-    /// تخصيص النص في Button باستخدام ألوان مخصصة من نوع UIColor
-    /// - Parameters:
-    ///   - title: نص الزر (اختياري)
-    ///   - titleColor: لون النص مباشرة (UIColor)
-    ///   - backgroundColor: لون الخلفية مباشرة (UIColor) (اختياري)
-    ///   - ofSize: حجم الخط
-    ///   - font: نوع الخط
-    ///   - fontStyle: نمط الخط (القيمة الافتراضية: .regular)
-    ///   - state: حالة الزر (القيمة الافتراضية: .normal)
+    // للتوافق مع الكود القديم
+    func addRadisButton(cornerRadius: CGFloat) {
+        addRadius(cornerRadius)
+    }
     
-    func customizeWithColor(title: Buttons? = nil,
-                            titleColor: UIColor,
-                            backgroundColor: UIColor? = nil,
-                            ofSize: Sizes,
-                            font: Fonts ,
-                            fontStyle: FontStyle = .regular,
-                            state: UIControl.State = .normal
+    /// تخصيص الزر بشكل كامل
+    func customize(
+        title: String? = nil,
+        titleColor: AppColors,
+        backgroundColor: AppColors? = nil,
+        font: UIFont? = nil,
+        cornerRadius: CGFloat = 0,
+        state: UIControl.State = .normal
     ) {
-        // تعيين النص إذا تم تمريره
         if let title = title {
-            self.setTitle(title.textBtn, for: state)
+            setTitle(title, for: state)
         }
         
-        // تعيين لون النص
-        self.setTitleColor(titleColor, for: state)
+        setThemeTitleColor(titleColor, for: state)
         
-        // تعيين لون الخلفية إذا تم تمريره
+        if let backgroundColor = backgroundColor {
+            setThemeBackgroundColor(backgroundColor)
+        }
+        
+        if let font = font {
+            titleLabel?.font = font
+        }
+        
+        if cornerRadius > 0 {
+            addRadius(cornerRadius)
+        }
+    }
+    
+    /// تخصيص الزر مع النصوص المعرفة (Enum)
+    func customize(
+        title: Buttons? = nil,
+        titleColor: AppColors,
+        backgroundColor: AppColors? = nil,
+        ofSize: Sizes,
+        font: Fonts,
+        fontStyle: FontStyle = .regular,
+        state: UIControl.State = .normal
+    ) {
+        if let title = title {
+            setTitle(title.textBtn, for: state)
+        }
+        
+        setThemeTitleColor(titleColor, for: state)
+        
+        if let backgroundColor = backgroundColor {
+            setThemeBackgroundColor(backgroundColor)
+        }
+        
+        titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+    }
+    
+    /// تخصيص الزر باستخدام ألوان UIColor مباشرة
+    func customizeWithColor(
+        title: Buttons? = nil,
+        titleColor: UIColor,
+        backgroundColor: UIColor? = nil,
+        ofSize: Sizes,
+        font: Fonts,
+        fontStyle: FontStyle = .regular,
+        state: UIControl.State = .normal
+    ) {
+        if let title = title {
+            setTitle(title.textBtn, for: state)
+        }
+        
+        setTitleColor(titleColor, for: state)
+        
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         }
         
-        self.titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+        titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
     }
     
-    /// تخصيص النص في Button مع دعم مزدوج للألوان (من نظام السمات أو مباشرة)
-    /// - Parameters:
-    ///   - title: نص الزر (اختياري)
-    ///   - titleColor: لون النص مباشرة (UIColor) (اختياري)
-    ///   - titleColorSet: لون النص من نظام السمات (اختياري)
-    ///   - backgroundColor: لون الخلفية مباشرة (UIColor) (اختياري)
-    ///   - backgroundColorSet: لون الخلفية من نظام السمات (اختياري)
-    ///   - ofSize: حجم الخط
-    ///   - font: نوع الخط
-    ///   - fontStyle: نمط الخط (القيمة الافتراضية: .regular)
-    ///   - state: حالة الزر (القيمة الافتراضية: .normal)
+    /// تخصيص مرن للزر
     func customizeFlexible(
-            title: Buttons? = nil,
-            titleColor: UIColor? = nil,
-            titleColorSet: ColorSet? = nil,
-            backgroundColor: UIColor? = nil,
-            backgroundColorSet: ColorSet? = nil,
-            ofSize: Sizes,
-            font: Fonts,
-            fontStyle: FontStyle = .regular,
-            state: UIControl.State = .normal
-        ) {
-            // تعيين النص إذا تم تمريره
-            if let title = title {
-                self.setTitle(title.textBtn, for: state)
-            }
-            
-            // تعيين لون النص (الأولوية للون المباشر، ثم نظام السمات)
-            if let color = titleColor {
-                self.setTitleColor(color, for: state)
-            } else if let colorSet = titleColorSet {
-                self.setThemeTitleColor(colorSet, for: state)
-            }
-            
-            // تعيين لون الخلفية (الأولوية للون المباشر، ثم نظام السمات)
-            if let bgColor = backgroundColor {
-                self.backgroundColor = bgColor
-            } else if let bgColorSet = backgroundColorSet {
-                self.setThemeBackgroundColor(bgColorSet)
-            }
-            
-            // تعيين الخط
-            self.titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+        title: Buttons? = nil,
+        titleColor: UIColor? = nil,
+        titleColorSet: AppColors? = nil,
+        backgroundColor: UIColor? = nil,
+        backgroundColorSet: AppColors? = nil,
+        ofSize: Sizes,
+        font: Fonts,
+        fontStyle: FontStyle = .regular,
+        state: UIControl.State = .normal
+    ) {
+        if let title = title {
+            setTitle(title.textBtn, for: state)
         }
-    
+        
+        // تعيين لون النص (الأولوية للون المباشر، ثم نظام السمات)
+        if let color = titleColor {
+            setTitleColor(color, for: state)
+        } else if let colorSet = titleColorSet {
+            setThemeTitleColor(colorSet, for: state)
+        }
+        
+        // تعيين لون الخلفية (الأولوية للون المباشر، ثم نظام السمات)
+        if let bgColor = backgroundColor {
+            self.backgroundColor = bgColor
+        } else if let bgColorSet = backgroundColorSet {
+            setThemeBackgroundColor(bgColorSet)
+        }
+        
+        // تعيين الخط
+        titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+    }
 }

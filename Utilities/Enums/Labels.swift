@@ -11,6 +11,7 @@ enum Lables: String , LocalizableEnim {
     case signup = "registerLabel"
     case welcome = "welcomeLabel"
     case welcomeSubtitle = "welcomeSubtitleLabel"
+    case createAccount = "createAccountLabel"
     
     var textLib: String {
         return self.localized

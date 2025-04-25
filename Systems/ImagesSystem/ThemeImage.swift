@@ -12,7 +12,7 @@ class ThemeImage {
         return appImage.image
     }
     
-    static func tintedImage(for appImage: AppImage, with colorSet: ColorSet) -> UIImage? {
+    static func tintedImage(for appImage: AppImage, with colorSet: AppColors) -> UIImage? {
         return appImage.tintedImage(with: colorSet)
     }
     
