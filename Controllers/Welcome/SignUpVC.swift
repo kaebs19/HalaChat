@@ -10,11 +10,8 @@ import UIKit
 class SignUpVC: UIViewController {
     
     // MARK: - Outlets
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var usernameView: UIView!
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet  var mainView: [UIView]!
     
     // MARK: - Variables - Arry
     private var themeObserverId: UUID?
@@ -26,8 +23,6 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
 
         setupUI()
-        // تطبيق السمة العامة
-        applyTheme()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +43,16 @@ class SignUpVC: UIViewController {
             ThemeManager.shared.removeThemeObserver(id: observer)
         }
     }
-    
+
+    // تنظيف وازالة العناصر اظافي
     deinit {
         clearThemeObserver(id: themeObserverId)
         themeObserverId = nil
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupUI()
     }
 }
 
@@ -59,21 +60,32 @@ class SignUpVC: UIViewController {
 extension SignUpVC {
     
     private func setupUI() {
+        // تطبيق السمة العامة
+        applyTheme()
+
         setStyledTitle(title: .SignUp)
        
         setupNavigationBar(items: [.BackButton])
         
         updateCustomUIElements()
-        setupViews()
-        setupTextFields()
     }
     
     func updateCustomUIElements() {
+        titleLabel.customize(text: Lables.createAccount.textLib,
+                             color: .text,
+                            ofSize: .size_22,
+                            font: .poppins , fontStyle: .extraBold)
         
+        setupViews()
+        setupTextFields()
+
     }
     
     func setupViews() {
-        
+        mainView.forEach { views in
+            views.setThemeBackgroundColor(.secondBackground)
+            views.addRadius(15)
+        }
     }
     
     func setupTextFields() {

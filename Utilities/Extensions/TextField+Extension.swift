@@ -1,6 +1,6 @@
 
 import UIKit
-
+import SkyFloatingLabelTextField
 
 extension UITextField {
     
@@ -53,25 +53,29 @@ extension UITextField {
 
     /// تخصيص النص في - TextFields
     /// إعداد حقل النص بالكامل
-    func customize(placeholder: String? = nil,
+    func customize(placeholder: TextFields? = nil,
                text: String? = nil,
-               textColor: AppColors,
+               textColor: AppColors? = nil,
                placeholderColor: AppColors? = nil,
                backgroundColor: AppColors? = nil,
                borderColor: AppColors? = nil,
                cornerRadius: CGFloat = 0,
                borderWidth: CGFloat = 0,
-               font: UIFont? = nil,
-               padding: UIEdgeInsets? = nil) {
+               font: Fonts? = nil,
+                   ofSize: Sizes? = nil,
+                   fontStyle: FontStyle? = nil,
+               padding: UIEdgeInsets? = nil,
+                   direction: Directions? = nil
+    ) {
         
         // تعيين النص والنص الافتراضي
         self.text = text
         if let placeholder = placeholder {
-            self.placeholder = placeholder
+            self.placeholder = placeholder.textTF
         }
         
         // تعيين لون النص
-        setThemeTextColor(textColor)
+        setThemeTextColor(textColor ?? .text )
         
         // تعيين لون النص الافتراضي
         if let placeholderColor = placeholderColor {
@@ -95,7 +99,13 @@ extension UITextField {
         
         // تعيين الخط
         if let font = font {
-            self.font = font
+            self.font = UIFont(name: font.name, size: ofSize?.rawValue ?? 0)
+        }
+        
+        // تعيين اتجاه النص
+
+        if let direction = direction {
+            self.textAlignment = direction.textAlignment
         }
         
         // تعيين الهوامش الداخلية
@@ -109,5 +119,48 @@ extension UITextField {
             rightViewMode = .always
         }
     }
+    
 
+ 
+    func customizePlaeholder(plaeholder: TextFields
+                         , placeholderColor: AppColors? = .text ,
+                         font: Fonts? = .poppins , fontStyle: FontStyle = .regular,
+                         ofSize: Sizes = .size_16,
+                         direction: Directions = .auto ) {
+        
+        // تعيين Placeholder مع اللون والنص
+        let plaeholderText = plaeholder.textTF ?? ""
+        self.attributedPlaceholder = NSAttributedString(
+            string: plaeholderText,
+            attributes: [
+                .foregroundColor: placeholderColor?.color ?? AppColors.text.color
+        ])
+        
+        // تعيين الخط
+        self.font = UIFont(name: font?.name ?? Fonts.poppins.name, size: ofSize.rawValue)
+        // تعيين اتجاه النص
+        self.textAlignment = direction.textAlignment
+        
+    }
+    
+    func customizeText(text: String? = nil,
+                       textColor: AppColors? = .text , font: Fonts = .poppins ,
+                       fontStyle: FontStyle = .regular,
+                       ofSize: Sizes = .size_16,
+                       direction: Directions = .auto
+    ) {
+        // تعيين النص إذا توفر
+
+        if let text = text {
+            self.text = text
+        }
+        // تعيين لون النص
+
+        self.textColor = textColor?.color ?? AppColors.text.color
+        
+        // تعيين الخط
+        self.font = UIFont(name: font.rawValue, size: ofSize.rawValue) ?? UIFont.systemFont(ofSize: ofSize.rawValue, weight: fontStyle.uiFontWeight)
+        // تعيين اتجاه النص
+        self.textAlignment = direction.textAlignment
+    }
 }

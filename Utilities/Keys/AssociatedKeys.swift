@@ -10,6 +10,8 @@ struct AssociatedKeys {
     static var borderThemeObserver = "borderThemeObserver"
     static var shadowThemeObserver = "shadowThemeObserver"
     static var tintColorThemeObserver = "tintColorThemeObserver"
+    static var originalPlaceholder = "originalPlaceholder"
+    static var placeholderColor = "placeholderColor"
 }
 
 /// امتداد لكائنات النظام يوفر طرق لتخزين واسترجاع خصائص مخصصة

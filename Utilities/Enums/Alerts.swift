@@ -8,14 +8,14 @@
 import Foundation
 
 
-enum Alerts: String , LocalizableEnim {
+enum Alerts: String  {
     
     case Yes = "yesAlert"
     case No = "noAlert"
  
     
     var alertText: String {
-        return self.localized
+        return self.rawValue.localized
     }
 
 }

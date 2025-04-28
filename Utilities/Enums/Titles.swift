@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum Titles: String , LocalizableEnim {
+enum Titles: String  {
     
     case welcomeToHalaChat = "Welcome to HalaChat"
     case Help = "HelpTitle"

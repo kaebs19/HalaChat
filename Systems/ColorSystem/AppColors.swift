@@ -9,6 +9,10 @@ enum AppColors: String, CaseIterable {
     case primary = "Primary"
     case secondary = "Secondary"
     case accent = "Accent"
+    case textSecond = "TextSecond"
+    case onlyWhite = "OnlyWhite"
+    case onlyBlack = "OnlyBlack"
+    case placeholderColor = "PlaceholderColor"
     
     // ألوان إضافية
     case success = "Success"

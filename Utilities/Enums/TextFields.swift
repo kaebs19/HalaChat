@@ -7,13 +7,17 @@
 
 import Foundation
 
-enum TextFields: String , LocalizableEnim {
+enum TextFields: String  {
     
-    case test = "testTF"
-    
+    case email = "emailTF"
+    case password = "passwordTF"
+    case confirmPassword = "confirmPasswordTF"
+    case name = "nameTF"
+    case phoneNumber = "phoneNumberTF"
+    case dateOfBirth = "dateOfBirthTF"
    
     var textTF: String {
-        return self.localized
+        return self.rawValue.localized
     }
 
 }

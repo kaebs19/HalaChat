@@ -2,9 +2,8 @@
 import Foundation
 
 
-enum Lables: String , LocalizableEnim {
+enum Lables: String  {
     
-    case test = "testLab"
     case findNew = "FindNewLab"
     case findNewSubtitle = "FindNewSubtitleLab"
     case login = "loginLabel"
@@ -14,7 +13,7 @@ enum Lables: String , LocalizableEnim {
     case createAccount = "createAccountLabel"
     
     var textLib: String {
-        return self.localized
+        return self.rawValue.localized
     }
 
 }

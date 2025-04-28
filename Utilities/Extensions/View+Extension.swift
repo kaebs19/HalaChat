@@ -1,8 +1,7 @@
 
+import UIKit
 
-    import UIKit
-
-    extension UIView {
+extension UIView {
         
         /// تحديث الألوان في العنصر
         func updateColors() {

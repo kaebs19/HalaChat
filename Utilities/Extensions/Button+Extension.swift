@@ -68,16 +68,16 @@ extension UIButton {
     }
     
     /// تخصيص الزر بشكل كامل
-    func customize(
-        title: String? = nil,
+    func customizeGenerl(
+        title: Lables? = nil,
         titleColor: AppColors,
         backgroundColor: AppColors? = nil,
-        font: UIFont? = nil,
+        font: Fonts? = .poppins,
         cornerRadius: CGFloat = 0,
         state: UIControl.State = .normal
     ) {
         if let title = title {
-            setTitle(title, for: state)
+            setTitle(title.textLib, for: state)
         }
         
         setThemeTitleColor(titleColor, for: state)
@@ -87,7 +87,7 @@ extension UIButton {
         }
         
         if let font = font {
-            titleLabel?.font = font
+            titleLabel?.font
         }
         
         if cornerRadius > 0 {
@@ -96,6 +96,7 @@ extension UIButton {
     }
     
     /// تخصيص الزر مع النصوص المعرفة (Enum)
+    
     func customize(
         title: Buttons? = nil,
         titleColor: AppColors,
@@ -103,7 +104,9 @@ extension UIButton {
         ofSize: Sizes,
         font: Fonts,
         fontStyle: FontStyle = .regular,
-        state: UIControl.State = .normal
+        state: UIControl.State = .normal,
+        alignment: Directions? = nil ,
+        cornerRadius: CGFloat = 0,
     ) {
         if let title = title {
             setTitle(title.textBtn, for: state)
@@ -116,6 +119,15 @@ extension UIButton {
         }
         
         titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+        
+        if let alignment = alignment {
+            titleLabel?.textAlignment  = alignment.textAlignment
+        }
+        
+        if cornerRadius > 0 {
+            addRadius(cornerRadius)
+        }
+
     }
     
     /// تخصيص الزر باستخدام ألوان UIColor مباشرة
@@ -126,7 +138,8 @@ extension UIButton {
         ofSize: Sizes,
         font: Fonts,
         fontStyle: FontStyle = .regular,
-        state: UIControl.State = .normal
+        state: UIControl.State = .normal,
+        cornerRadius: CGFloat = 0
     ) {
         if let title = title {
             setTitle(title.textBtn, for: state)
@@ -139,6 +152,11 @@ extension UIButton {
         }
         
         titleLabel?.font = FontManager.shared.font(family: font, style: fontStyle, size: ofSize)
+        
+        if cornerRadius > 0 {
+            addRadius(cornerRadius)
+        }
+
     }
     
     /// تخصيص مرن للزر

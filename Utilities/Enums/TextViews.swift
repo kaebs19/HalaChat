@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum TextViews: String , LocalizableEnim {
+enum TextViews: String  {
     
     case test = "testTV"
     
     var textTV: String {
-        return self.localized
+        return self.rawValue.localized
     }
 
     

@@ -10,14 +10,11 @@ import UIKit
 class WelcomeVC: UIViewController {
     
     // MARK: - Outlets
-    @IBOutlet weak var patternImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var loginView: UIView!
-    @IBOutlet weak var signupView: UIView!
-    @IBOutlet weak var loginLaibel: UILabel!
-    @IBOutlet weak var signupLaibel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
+    
     
     // MARK: - Variables - Arry
     private var themeObserverId: UUID?
@@ -69,12 +66,12 @@ extension WelcomeVC {
     }
     
     private func updateCustomUIElements() {
-        titleLabel.customize(text: Lables.welcome.textLib,
-                             color: .text, ofSize: .size_20,
-                             font: .poppins , fontStyle: .extraBold)
-        subtitleLabel.customize(text: Lables.welcomeSubtitle.textLib,
+        titleLabel.customize(text: Lables.findNew.textLib,
+                             color: .text, ofSize: .size_16 ,
+                             font: .cairo , fontStyle: .extraBold)
+        subtitleLabel.customize(text: Lables.findNewSubtitle.textLib,
                              color: .text, ofSize: .size_16,
-                             font: .poppins , fontStyle: .bold)
+                             font: .poppins , fontStyle: .bold , lines: 3)
         
         setupViews()
         
@@ -82,14 +79,36 @@ extension WelcomeVC {
     }
     
     private func setupViews() {
-        loginView.applyGradient(startColor: .Start, endColor: .End ,direction: .diagonalTopRightToBottomLeft)
-        loginView.addRadius(15)
-        
-        signupView.applyGradient(startColor: .BlueStart, endColor: .BlueEnd , direction: .diagonalTopLeftToBottomRight ,respectDarkMode: true)
-        signupView.addRadius(15)
+   
     }
     
     private func setupButton() {
         loginButton.backgroundColor = AppColors.background.color
+        loginButton.customize(title: .login,
+                              titleColor: .textSecond,
+                              ofSize: .size_18,
+                              font: .cairo ,fontStyle: .bold,
+                              cornerRadius: 15 )
+        
+        loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+
+        signupButton.applyGradient(startColor: .Start, endColor: .End , direction: .diagonalTopRightToBottomLeft , respectDarkMode: true)
+        signupButton.customize(title: .signup,
+                              titleColor: .onlyWhite,
+                              ofSize: .size_18,
+                               font: .cairo ,fontStyle: .bold,
+                              cornerRadius: 15 )
+        signupButton.addTarget(self, action: #selector(signupTapped), for: .touchUpInside)
+
+
     }
+    
+    @objc func loginTapped() {
+        goToVC(storyboard: .Welcome, identifiers: .LoginVC)
+    }
+    
+    @objc func signupTapped() {
+        goToVC(storyboard: .Welcome, identifiers: .SignUpVC)
+    }
+
 }

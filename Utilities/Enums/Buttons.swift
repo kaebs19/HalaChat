@@ -7,15 +7,16 @@
 
 import Foundation
 
-enum Buttons: String , LocalizableEnim {
+enum Buttons: String  {
     
     case test = "testButton"
     case skip = "skipButton"
     case login = "loginButton"
     case signup = "registerButton"
+    case forgotPassword = "forgotPasswordButton"
     
     var textBtn: String {
-        return self.localized
+        return self.rawValue.localized
     }
 
 }

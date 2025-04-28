@@ -8,7 +8,13 @@
 import Foundation
 
 
-extension String {
+extension String: Localizable
+
+{
+    var lolocalized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
     
     
     var localized: String {
@@ -22,27 +28,3 @@ extension String {
 }
 
 
-#if DEBUG
-extension String {
-    var debugLocalized: String {
-        let localized = NSLocalizedString(self, comment: "")
-        if localized == self {
-            print("⚠️ Missing localization for key: \(self)")
-        }
-        return localized
-    }
-}
-#endif
-
-// LocalizationProtocol.swift
-
-protocol LocalizableEnim {
-    var localized: String { get }
-}
-
-extension LocalizableEnim where Self: RawRepresentable, Self.RawValue == String {
-    
-    var localized: String {
-        return self.rawValue.localized
-    }
-}

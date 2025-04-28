@@ -85,14 +85,14 @@ extension UIViewController {
                     
                 case .Help:
                     // نص فقط بدون استخدم صور
-                    rightBar.append(UIBarButtonItem(title: Titles.Help.localized,
+                    rightBar.append(UIBarButtonItem(title: Titles.Help.textTitle,
                                                     style: .plain, target: self,
                                                     action: #selector(showHelpButtonAction)))
                     
                 case .BackButton:
                     // مع استخدم الصورة
                     let backImage = AppImage.back.tintedImage(with: ThemeManager.shared.color(.primary))
-                    leftBar.append(UIBarButtonItem(image: backImage?.withRenderingMode(.alwaysOriginal),
+                    leftBar.append(UIBarButtonItem(image: backImage?.withRenderingMode(.alwaysTemplate),
                                                    style: .plain, target: self,
                                                    action: #selector(backButtonAction)))
                     

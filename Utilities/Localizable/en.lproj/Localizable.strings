@@ -22,10 +22,15 @@
 "skipButton"="Skip";
 "loginButton"="Log In";
 "registerButton"="Sign Up";
-
+"forgotPasswordButton" = "Forgot your password?";
 
 // ---    Text Field
-"test" = "test";
+"emailTF" = "Email";
+"passwordTF"="Password";
+"confirmPasswordTF"="Confirm Password";
+"nameTF"="Username";
+"phoneNumberTF"="Phone";
+"dateOfBirthTF"="Date of birth";
 
 // ---  Title
 

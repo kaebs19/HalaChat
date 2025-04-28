@@ -7,13 +7,13 @@
 */
 
 // --   Lables
-"FindNewLab"="ابحث عن أصدقاء جدد بالقرب منك .";
+"FindNewLab"="أصدقاء جدد، قصص جديدة… تبدأ من هنا .";
 "FindNewSubtitleLab"="مع الكثير من المستخدمين في جميع أنحاء العالم، نمنحك القدرة على التواصل مع الأشخاص أينما كنت.";
 "loginLabel"="تسجيل دخول";
 "registerLabel"="انشاء حساب جديد";
 "welcomeLabel"="ياهلا فيك بعوتك مرة اخرى";
 "welcomeSubtitleLabel"="قم بالتسجيل الدخول إلى الحساب الخاص بك من جديد.";
-"createAccountLabel"="انشاء حساب جديد";
+"createAccountLabel"="قم بتعبية البيانات للتسجيل";
 
 
 
@@ -22,11 +22,16 @@
 "skipButton"="تخطي";
 "loginButton"="تسجيل دخول";
 "registerButton"="انشاء حساب";
+"forgotPasswordButton" = "هل نسيت كلمةالسر ؟";
+
 
 // ---    Text Field
-
-"test" = "تجربة النص";
-
+"emailTF" = "البريد الإلكتروني";
+"passwordTF" = "كلمة المرور";
+"confirmPasswordTF" = "تأكيد كلمة المرور";
+"nameTF" = "اسم المستخدم";
+"phoneNumberTF" = "رقم الهاتف";
+"dateOfBirthTF" = "تاريخ الميلاد";
 
 // ---  Title
 
