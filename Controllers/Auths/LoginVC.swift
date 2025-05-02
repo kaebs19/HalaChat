@@ -17,10 +17,26 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
+    @IBOutlet weak var showPasswordImageView: UIImageView!
     
     // MARK: - Variables - Arry
     private var themeObserver: UUID?
-    
+    // متغير لتتبع حالة إظهار كلمة المرور
+
+    var isShowPassword: Bool = false {
+        didSet {
+            passwordTextField.togglePassword()
+            let imageName = isShowPassword ? "eye.slash" : "eye"
+            let newImage = UIImage(systemName: imageName)
+            // استخدام التأثير الانتقالي من امتداد UIImage
+
+            UIImage.applyThemeTransition(to: showPasswordImageView,
+                                         image: newImage,
+                                         colorSet: .text)
+          
+        }
+    }
+
     
     // MARK: - Lifecycle
     
@@ -54,6 +70,25 @@ class LoginVC: UIViewController {
     override func viewDidLayoutSubviews() {
         updateCustomUIElements()
         setupUI()
+    }
+    
+    @IBAction func showPasswordClickBut(_ sender: UIButton) {
+
+        // تحديد الصورة الجديدة قبل التبديل
+           let imageName = !isShowPassword ? "eye.slash" : "eye"
+           let newImage = UIImage(systemName: imageName)
+           
+           // تطبيق تأثير الدوران
+           UIImage.applyThemeFlipTransition(
+               to: showPasswordImageView,
+               image: newImage,
+               colorSet: .text,
+               direction: .vertical
+           )
+           
+           // تبديل حالة إظهار كلمة المرور
+           isShowPassword.toggle()
+           passwordTextField.togglePassword()
     }
 }
 
@@ -91,6 +126,7 @@ extension LoginVC {
         subtitleLabel.customize(text: Lables.welcomeSubtitle.textLib,
                                 color: .text, ofSize: .size_16,
                                 font: .poppins , fontStyle: .bold , lines: 3)
+        showPasswordImageView.setThemeTintColor(.text)
         
     }
     
@@ -113,7 +149,6 @@ extension LoginVC {
                                        font: .poppins , fontStyle: .semiBold ,
                                        direction: .auto)
         passwordTextField.customizeText()
-
         
     }
     
@@ -137,22 +172,4 @@ extension LoginVC {
 }
 
 
-extension LoginVC: UITextFieldDelegate {
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.placeholder = ""
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        if textField.text?.isEmpty ?? true {
-            // استعادة النص الافتراضي
-            if textField == emailTextField {
-                textField.placeholder = TextFields.email.textTF
-            } else if textField == passwordTextField {
-                textField.placeholder = TextFields.password.textTF
-            }
-        }
-    }
-    
-}
 

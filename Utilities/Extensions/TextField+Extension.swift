@@ -48,23 +48,23 @@ extension UITextField {
             )
         }
     }
-
     
-
+    
+    
     /// تخصيص النص في - TextFields
     /// إعداد حقل النص بالكامل
     func customize(placeholder: TextFields? = nil,
-               text: String? = nil,
-               textColor: AppColors? = nil,
-               placeholderColor: AppColors? = nil,
-               backgroundColor: AppColors? = nil,
-               borderColor: AppColors? = nil,
-               cornerRadius: CGFloat = 0,
-               borderWidth: CGFloat = 0,
-               font: Fonts? = nil,
+                   text: String? = nil,
+                   textColor: AppColors? = nil,
+                   placeholderColor: AppColors? = nil,
+                   backgroundColor: AppColors? = nil,
+                   borderColor: AppColors? = nil,
+                   cornerRadius: CGFloat = 0,
+                   borderWidth: CGFloat = 0,
+                   font: Fonts? = nil,
                    ofSize: Sizes? = nil,
                    fontStyle: FontStyle? = nil,
-               padding: UIEdgeInsets? = nil,
+                   padding: UIEdgeInsets? = nil,
                    direction: Directions? = nil
     ) {
         
@@ -103,7 +103,7 @@ extension UITextField {
         }
         
         // تعيين اتجاه النص
-
+        
         if let direction = direction {
             self.textAlignment = direction.textAlignment
         }
@@ -120,47 +120,69 @@ extension UITextField {
         }
     }
     
-
- 
+    
+    
     func customizePlaeholder(plaeholder: TextFields
-                         , placeholderColor: AppColors? = .text ,
-                         font: Fonts? = .poppins , fontStyle: FontStyle = .regular,
-                         ofSize: Sizes = .size_16,
-                         direction: Directions = .auto ) {
+                             , placeholderColor: AppColors = .text ,
+                             font: Fonts? = .poppins , fontStyle: FontStyle = .regular,
+                             ofSize: Sizes = .size_16,
+                             direction: Directions = .auto ) {
         
-        // تعيين Placeholder مع اللون والنص
-        let plaeholderText = plaeholder.textTF ?? ""
-        self.attributedPlaceholder = NSAttributedString(
-            string: plaeholderText,
-            attributes: [
-                .foregroundColor: placeholderColor?.color ?? AppColors.text.color
-        ])
+        self.placeholder  = plaeholder.textTF
+        // استخدام دعم السمات لتعيين لون النص الافتراضي
+        setThemeTextColor(placeholderColor)
         
         // تعيين الخط
-        self.font = UIFont(name: font?.name ?? Fonts.poppins.name, size: ofSize.rawValue)
+        self.font = UIFont(name: font?.name ?? Fonts.cairo.name, size: ofSize.rawValue) ??
+        UIFont.systemFont(ofSize: ofSize.rawValue, weight: fontStyle.uiFontWeight)
         // تعيين اتجاه النص
         self.textAlignment = direction.textAlignment
         
     }
     
     func customizeText(text: String? = nil,
-                       textColor: AppColors? = .text , font: Fonts = .poppins ,
+                       textColor: AppColors = .text , font: Fonts = .poppins ,
                        fontStyle: FontStyle = .regular,
                        ofSize: Sizes = .size_16,
                        direction: Directions = .auto
     ) {
         // تعيين النص إذا توفر
-
+        
         if let text = text {
             self.text = text
         }
         // تعيين لون النص
-
-        self.textColor = textColor?.color ?? AppColors.text.color
+        
+        setThemeTextColor(textColor)
         
         // تعيين الخط
-        self.font = UIFont(name: font.rawValue, size: ofSize.rawValue) ?? UIFont.systemFont(ofSize: ofSize.rawValue, weight: fontStyle.uiFontWeight)
+        self.font = UIFont(name: font.rawValue, size: ofSize.rawValue) ??
+        UIFont.systemFont(ofSize: ofSize.rawValue, weight: fontStyle.uiFontWeight)
         // تعيين اتجاه النص
         self.textAlignment = direction.textAlignment
     }
+    
+    /// تحويل حقل النص إلى حقل كلمة مرور (يظهر النص كنجوم)
+    func makeSecure() {
+        self.isSecureTextEntry = true
+    }
+    
+    func togglePassword() {
+        // حفظ النص والموضع الحاليين
+        let existingText = text
+        let existingSelectedRange = selectedTextRange
+        
+        // تبديل حالة الأمان
+        isSecureTextEntry.toggle()
+        
+        // إعادة تعيين النص ليظهر التغيير
+        text = nil
+        text = existingText
+        
+        // استعادة موضع المؤشر إذا أمكن
+        if let range = existingSelectedRange {
+            selectedTextRange = range
+        }
+    }
 }
+

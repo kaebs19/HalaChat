@@ -14,6 +14,8 @@
 "welcomeLabel"="ياهلا فيك بعوتك مرة اخرى";
 "welcomeSubtitleLabel"="قم بالتسجيل الدخول إلى الحساب الخاص بك من جديد.";
 "createAccountLabel"="قم بتعبية البيانات للتسجيل";
+"argeementLabel"="بالنقر فوق تسجيل فإنك توافق على الشروط والأحكام التالية دون تحفظ .";
+"iAgreeLabel"="انا موافق على";
 
 
 
@@ -23,6 +25,8 @@
 "loginButton"="تسجيل دخول";
 "registerButton"="انشاء حساب";
 "forgotPasswordButton" = "هل نسيت كلمةالسر ؟";
+"TermsButton"= "شروط الاستخدام";
+"ConditionsButton"="سياسية الخصوصية";
 
 
 // ---    Text Field
@@ -32,6 +36,8 @@
 "nameTF" = "اسم المستخدم";
 "phoneNumberTF" = "رقم الهاتف";
 "dateOfBirthTF" = "تاريخ الميلاد";
+"usernameTF"="اسم المستخدم";
+
 
 // ---  Title
 

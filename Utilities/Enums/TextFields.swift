@@ -14,6 +14,7 @@ enum TextFields: String  {
     case confirmPassword = "confirmPasswordTF"
     case name = "nameTF"
     case phoneNumber = "phoneNumberTF"
+    case username = "usernameTF"
     case dateOfBirth = "dateOfBirthTF"
    
     var textTF: String {

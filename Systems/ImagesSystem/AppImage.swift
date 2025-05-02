@@ -10,7 +10,8 @@ enum AppImage: String , CaseIterable {
     case more = "more_icon"
     case list = "list_icon"
     case close = "close_icon"
-
+    case Eye_on = "eye"
+    case Eye_off = "eye-off"
     
     /// الحصول على كائن UIImage مع مراعاة الوضع الحالي (فاتح/مظلم)
     var image: UIImage? {

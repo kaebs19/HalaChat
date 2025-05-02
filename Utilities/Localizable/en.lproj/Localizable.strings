@@ -16,6 +16,8 @@
  "welcomeLabel"="Welcome back";
  "welcomeSubtitleLabel"="Login to your account";
 "createAccountLabel"="Create an account";
+"argeementLabel"="By clicking Sign up you agree to the following Terms and Conditions without reservation ";
+"iAgreeLabel"="I agree for";
 
 // --   Buttons
 "HelpTitle"="Help";
@@ -23,6 +25,9 @@
 "loginButton"="Log In";
 "registerButton"="Sign Up";
 "forgotPasswordButton" = "Forgot your password?";
+"TermsButton"= "Terms";
+"ConditionsButton"="Conditions";
+
 
 // ---    Text Field
 "emailTF" = "Email";
@@ -31,6 +36,7 @@
 "nameTF"="Username";
 "phoneNumberTF"="Phone";
 "dateOfBirthTF"="Date of birth";
+"usernameTF"="User Name";
 
 // ---  Title
 
