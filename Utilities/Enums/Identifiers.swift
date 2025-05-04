@@ -11,8 +11,11 @@ import Foundation
 enum Identifiers: String {
     
     case OnboardingVC = "OnboardingVC"
-    case MainAppVC = "MainAppVC"
+    case HomeVC = "HomeVC"
     case WelcomeVC = "WelcomeVC"
     case LoginVC = "LoginVC"
     case SignUpVC = "SignUpVC"
+    case MessagesVC = "MessagesVC"
+    case NotificationVC = "NotificationVC"
+    case AccountVC = "AccountVC"
 }

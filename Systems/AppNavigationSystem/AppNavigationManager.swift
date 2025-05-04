@@ -110,7 +110,7 @@ class AppNavigationManager {
     /// - Returns: وحدة تحكم التطبيق الرئيسية
     func createMainAppController() -> UIViewController {
         let storyboard = UIStoryboard(name: Storyboards.Main.rawValue, bundle: nil)
-        let mainAppVC = storyboard.instantiateViewController(withIdentifier: Identifiers.MainAppVC.rawValue)
+        let mainAppVC = storyboard.instantiateViewController(withIdentifier: Identifiers.HomeVC.rawValue)
         return UINavigationController(rootViewController: mainAppVC)
     }
     

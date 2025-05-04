@@ -444,10 +444,10 @@
             </objects>
             <point key="canvasLocation" x="2594.6564885496182" y="-135.21126760563382"/>
         </scene>
-        <!--View Controller-->
+        <!--AccountVC-->
         <scene sceneID="7pY-Bu-lEy">
             <objects>
-                <viewController id="zlD-iJ-XCe" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AccountVC" id="zlD-iJ-XCe" customClass="AccountVC" customModule="HalaChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="btK-L2-pTB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

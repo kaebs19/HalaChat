@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainAppVC: UIViewController {
+class HomeVC: UIViewController {
     
 
     // MARK: - Outlets
@@ -29,7 +29,7 @@ class MainAppVC: UIViewController {
 }
 
 
-extension MainAppVC {
+extension HomeVC {
     
     private func setupUI() {
         

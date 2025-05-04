@@ -224,6 +224,6 @@ extension SignUpVC {
     }
     
     @objc func signupButtonTapped() {
-        goToVC(identifiers: .MainAppVC)
+        goToVC(identifiers: .HomeVC)
     }
 }
