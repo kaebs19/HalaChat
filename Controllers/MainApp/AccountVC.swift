@@ -31,6 +31,10 @@ class AccountVC: UIViewController {
 extension AccountVC {
     
     func setup() {
+        // تطبيق السمة العامة
+        applyTheme()
         
+        self.title = TitleBar.Account.titleName
+
     }
 }

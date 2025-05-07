@@ -334,7 +334,6 @@ extension UIViewController {
 
 // MARK -- Title
 extension UIViewController {
-    
     /// تعيين عنوان منسق للشاشة
     ///
     /// - Parameters:
@@ -344,38 +343,52 @@ extension UIViewController {
     ///   - fontStyle: نمط الخط (اختياري، افتراضي: .semiBold)
     ///   - fontSize: حجم الخط (اختياري، افتراضي: .size_16)
     ///   - alignment: محاذاة النص (اختياري، افتراضي: حسب اتجاه اللغة)
-    
+    ///   - useLargeTitle: هل يتم عرض العنوان كـ "Large Title"؟ (اختياري، افتراضي: false)
+
     func setStyledTitle(title: Titles,
                         Color: AppColors = .text,
                         font: Fonts? = .poppins,
                         fontStyle: FontStyle = .semiBold,
                         FontSize: Sizes = .size_16,
-                        alignment: NSTextAlignment? = nil) {
+                        alignment: NSTextAlignment? = nil,
+                        useLargeTitle: Bool = false) {
         
-        // إنشاء عنصر label للعنوان
-        let titleLabel = UILabel()
-        titleLabel.text = title.textTitle
+        // تعيين إذا كان نستخدم العنوان الكبير
+        navigationController?.navigationBar.prefersLargeTitles = useLargeTitle
+        navigationItem.largeTitleDisplayMode = useLargeTitle ? .always : .never
         
-        // تعيين اللون حسب وضع التطبيق (فاتح/مظلم)
-        titleLabel.textColor = ColorTheme.current == .dark ? Color.darkModeColor : Color.lightModeColor
-        
-        // تعيين الخط
-        if let font = font {
-            titleLabel.font = FontManager.shared.font(family: font, style: fontStyle, size: FontSize)
+        if useLargeTitle {
+            // استخدام الخاصية الأساسية title بدلًا من titleView (للعنوان الكبير)
+            navigationItem.title = title.textTitle
+            
+            // تعيين لون الخط الكبير عبر مظهر navigationBar
+            let textColor = ColorTheme.current == .dark ? Color.darkModeColor : Color.lightModeColor
+            let fontToUse: UIFont = font != nil ?
+                FontManager.shared.font(family: font!, style: fontStyle, size: FontSize) :
+                FontManager.shared.fontForCurrentLanguage(style: fontStyle, size: FontSize)
+
+            let largeTitleAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: textColor,
+                .font: fontToUse
+            ]
+            
+            navigationController?.navigationBar.largeTitleTextAttributes = largeTitleAttributes
+
         } else {
-            titleLabel.font = FontManager.shared.fontForCurrentLanguage(style: fontStyle, size: FontSize)
+            // إنشاء label مخصص للعناوين الصغيرة
+            let titleLabel = UILabel()
+            titleLabel.text = title.textTitle
+            titleLabel.textColor = ColorTheme.current == .dark ? Color.darkModeColor : Color.lightModeColor
+            titleLabel.font = font != nil ?
+                FontManager.shared.font(family: font!, style: fontStyle, size: FontSize) :
+                FontManager.shared.fontForCurrentLanguage(style: fontStyle, size: FontSize)
+            titleLabel.textAlignment = alignment ?? (isEnglish() ? .right : .left)
+            
+            navigationItem.titleView = titleLabel
         }
-        
-        // تعيين المحاذاة
-        if let alignment = alignment {
-            titleLabel.textAlignment = alignment
-        } else {
-            titleLabel.textAlignment = isEnglish() ? .right : .left
-        }
-        // تعيين عنصر العنوان في شريط التنقل
-        navigationItem.titleView = titleLabel
     }
-             
+    
+    
     
     /// تعيين عنوان منسق من مجموعة النصوص
     ///

@@ -32,6 +32,9 @@ class HomeVC: UIViewController {
 extension HomeVC {
     
     private func setupUI() {
-        
+        // تطبيق السمة العامة
+        applyTheme()
+    
+        self.title = TitleBar.Home.titleName
     }
 }

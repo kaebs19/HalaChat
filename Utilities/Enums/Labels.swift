@@ -13,6 +13,7 @@ enum Lables: String  {
     case createAccount = "createAccountLabel"
     case argeement = "argeementLabel"
     case iAgree = "iAgreeLabel"
+    case forgotPasswordSubtitle = "forgotPasswordSubtitleLabel"
     
     var textLib: String {
         return self.rawValue.localized

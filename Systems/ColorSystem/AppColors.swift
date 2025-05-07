@@ -14,6 +14,7 @@ enum AppColors: String, CaseIterable {
     case onlyBlack = "OnlyBlack"
     case placeholderColor = "PlaceholderColor"
     case ashBlue = "AshBlue"
+    case tabBarBackground = "TabBarBackground"
     
     // ألوان إضافية
     case success = "Success"

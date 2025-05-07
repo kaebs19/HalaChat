@@ -49,8 +49,8 @@ class LoginVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // تحديث أي عناصر خاصة عند تغيير السمة
-        themeObserver = setupThemeObserver {
-            self.updateCustomUIElements()
+        themeObserver = setupThemeObserver { [weak self] in
+            self?.updateCustomUIElements()
         }
     }
     
@@ -163,11 +163,16 @@ extension LoginVC {
         
         forgotPasswordButton.customize(title: .forgotPassword,
                                        titleColor: .text, ofSize: .size_14, font: .poppins)
+        forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
         
     }
     
     @objc func loginTapped() {
         print(" loginTapped")
+    }
+    
+    @objc func forgotPasswordTapped() {
+        goToVC(storyboard: .Welcome, identifiers: .ForgetPasswordVC)
     }
 }
 

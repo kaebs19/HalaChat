@@ -15,7 +15,9 @@ enum Identifiers: String {
     case WelcomeVC = "WelcomeVC"
     case LoginVC = "LoginVC"
     case SignUpVC = "SignUpVC"
+    case MainBars = "MainBars"
     case MessagesVC = "MessagesVC"
     case NotificationVC = "NotificationVC"
     case AccountVC = "AccountVC"
+    case ForgetPasswordVC = "ForgetPasswordVC"
 }

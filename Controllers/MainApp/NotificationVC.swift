@@ -30,6 +30,10 @@ class NotificationVC: UIViewController {
 extension NotificationVC {
     
     private func setupUI() {
+        // تطبيق السمة العامة
+        applyTheme()
         
+        self.title = TitleBar.Notifications.titleName
+
     }
 }

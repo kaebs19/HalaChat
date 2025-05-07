@@ -18,6 +18,7 @@
 "createAccountLabel"="Create an account";
 "argeementLabel"="By clicking Sign up you agree to the following Terms and Conditions without reservation ";
 "iAgreeLabel"="I agree for";
+"forgotPasswordSubtitleLabel" = "Please enter your email address. You will receive a link to create a new password via email.";
 
 // --   Buttons
 "HelpTitle"="Help";
@@ -27,6 +28,7 @@
 "forgotPasswordButton" = "Forgot your password?";
 "TermsButton"= "Terms";
 "ConditionsButton"="Conditions";
+"sendButton" = "Send";
 
 
 // ---    Text Field
@@ -42,9 +44,9 @@
 
 "LoginTitle" = "Login";
 "SignUpTitle" = "Sign up";
-
+"ForgotPasswordTitle" = "ForgotPassword";
 "HomeTitle" = "Explore";
-"MassageTitle" = "Massage";
+"MessagesTitle" = "Massage";
 "NotificationsTitle" = "Notifications";
 "AccountTitle" = "Account";
 

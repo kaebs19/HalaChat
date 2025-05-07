@@ -220,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIg-LV-Dle" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1919.8473282442746" y="-135.21126760563382"/>
+            <point key="canvasLocation" x="1912" y="-120"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="WwG-ne-BdB">
@@ -442,22 +442,71 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WLg-HE-5cx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2594.6564885496182" y="-135.21126760563382"/>
+            <point key="canvasLocation" x="2589" y="-120"/>
         </scene>
-        <!--AccountVC-->
+        <!--Forget PasswordVC-->
         <scene sceneID="7pY-Bu-lEy">
             <objects>
-                <viewController storyboardIdentifier="AccountVC" id="zlD-iJ-XCe" customClass="AccountVC" customModule="HalaChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForgetPasswordVC" id="zlD-iJ-XCe" customClass="ForgetPasswordVC" customModule="HalaChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="btK-L2-pTB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsj-YA-e1j">
+                                <rect key="frame" x="30" y="168" width="333" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RV3-EC-JT7">
+                                <rect key="frame" x="30" y="219" width="333" height="46"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I1i-Rf-HLo">
+                                        <rect key="frame" x="8" y="0.0" width="317" height="46"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="I1i-Rf-HLo" secondAttribute="bottom" id="IGw-rN-TV8"/>
+                                    <constraint firstAttribute="trailing" secondItem="I1i-Rf-HLo" secondAttribute="trailing" constant="8" id="T6b-zP-LmU"/>
+                                    <constraint firstItem="I1i-Rf-HLo" firstAttribute="leading" secondItem="RV3-EC-JT7" secondAttribute="leading" constant="8" id="n8b-0w-aSu"/>
+                                    <constraint firstItem="I1i-Rf-HLo" firstAttribute="top" secondItem="RV3-EC-JT7" secondAttribute="top" id="wMk-09-7ia"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGt-oI-C4s">
+                                <rect key="frame" x="30" y="305" width="333" height="46.333333333333314"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="WYb-8r-cGr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Rsj-YA-e1j" firstAttribute="leading" secondItem="WYb-8r-cGr" secondAttribute="leading" constant="30" id="2tT-ac-sOi"/>
+                            <constraint firstItem="WYb-8r-cGr" firstAttribute="trailing" secondItem="Rsj-YA-e1j" secondAttribute="trailing" constant="30" id="5dH-el-6vi"/>
+                            <constraint firstItem="zGt-oI-C4s" firstAttribute="top" secondItem="RV3-EC-JT7" secondAttribute="bottom" constant="40" id="6ma-WD-pg0"/>
+                            <constraint firstItem="Rsj-YA-e1j" firstAttribute="top" secondItem="WYb-8r-cGr" secondAttribute="top" constant="50" id="8Su-5z-r4s"/>
+                            <constraint firstItem="RV3-EC-JT7" firstAttribute="top" secondItem="Rsj-YA-e1j" secondAttribute="bottom" constant="30" id="AGN-K2-J82"/>
+                            <constraint firstItem="WYb-8r-cGr" firstAttribute="trailing" secondItem="RV3-EC-JT7" secondAttribute="trailing" constant="30" id="AGW-1N-OoZ"/>
+                            <constraint firstItem="zGt-oI-C4s" firstAttribute="height" secondItem="WYb-8r-cGr" secondAttribute="width" multiplier="0.117333" id="ZMo-Ye-K11"/>
+                            <constraint firstItem="zGt-oI-C4s" firstAttribute="leading" secondItem="WYb-8r-cGr" secondAttribute="leading" constant="30" id="hGi-7Z-luk"/>
+                            <constraint firstItem="RV3-EC-JT7" firstAttribute="leading" secondItem="WYb-8r-cGr" secondAttribute="leading" constant="30" id="mlO-YU-tVP"/>
+                            <constraint firstItem="WYb-8r-cGr" firstAttribute="trailing" secondItem="zGt-oI-C4s" secondAttribute="trailing" constant="30" id="vjO-uj-Ej7"/>
+                            <constraint firstItem="RV3-EC-JT7" firstAttribute="height" secondItem="WYb-8r-cGr" secondAttribute="width" multiplier="0.117333" id="x66-JK-wZu"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="passwordSutitleLbl" destination="Rsj-YA-e1j" id="mCo-ll-VrE"/>
+                        <outlet property="passwordTextField" destination="I1i-Rf-HLo" id="Oxi-mw-XsV"/>
+                        <outlet property="passwordView" destination="RV3-EC-JT7" id="p9b-LK-4ho"/>
+                        <outlet property="sendButton" destination="zGt-oI-C4s" id="fvD-ez-eEA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycN-eU-F4N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3332" y="-135"/>
+            <point key="canvasLocation" x="3311" y="-120"/>
         </scene>
     </scenes>
     <resources>

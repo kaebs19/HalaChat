@@ -20,6 +20,10 @@ class MainBars: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
+        DispatchQueue.main.async {
+            self.updateTabBarItemTitles(selectedIndex: self.selectedIndex)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +64,7 @@ extension MainBars {
     
     // MARK: - UI Setup
     func setupUI() {
+        hideNavigationBar(animated: true)
         // إعداد عناصر شريط التبويب
         setupTabBarItems()
         
@@ -99,7 +104,7 @@ extension MainBars {
         
         // تعيين Tab Bar Items
         configureTabBarItem(for: homeVC, with: homeConfig)
-        configureTabBarItem(for: messagesVC, with: homeConfig)
+        configureTabBarItem(for: messagesVC, with: messagesConfig)
         configureTabBarItem(for: notificationsVC, with: notificationsConfig)
         configureTabBarItem(for: accountVC, with: accountConfig)
         
@@ -111,11 +116,14 @@ extension MainBars {
     /// تكوين عنصر TabBar لـ ViewController محدد
 
     private func configureTabBarItem(for viewController: UIViewController, with config: TabBarItemConfig) {
-        let tabBarItem = UITabBarItem( title: config.title.titleName,
+        
+        let tabBarItem = UITabBarItem( title: "",
                                        image: config.unselectedImage.withRenderingMode(.alwaysOriginal),
                                        selectedImage: config.selectedImage.withRenderingMode(.alwaysTemplate))
         
+        tabBarItem.accessibilityLabel = config.title.titleName
         viewController.tabBarItem = tabBarItem
+        
     }
     
     // MARK: - Tab Bar Appearance
@@ -130,7 +138,7 @@ extension MainBars {
         // تخصيص الخلفية
         appearance.configureWithOpaqueBackground()
         
-        appearance.backgroundColor = ThemeManager.shared.color(.background)
+        appearance.backgroundColor = ThemeManager.shared.color(.tabBar)
         
         // تخصيص الحدود العلوية
         appearance.shadowColor = ThemeManager.shared.color(.separator).withAlphaComponent(0.3)
@@ -140,15 +148,15 @@ extension MainBars {
         
         // نمط العنصر العادي
         itemAppearance.normal.titleTextAttributes = [
-            NSAttributedString.Key.font: Fonts.poppins.name,
-            NSAttributedString.Key.backgroundColor: ThemeManager.shared.color(.textSecond)
+            NSAttributedString.Key.font: UIFont(name: Fonts.poppins.name, size: Sizes.size_10.rawValue) ?? UIFont.systemFont(ofSize: Sizes.size_10.rawValue),
+            NSAttributedString.Key.backgroundColor: UIColor.clear
         ]
         
         // نمط العنصر المحدد
         itemAppearance.selected.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: Sizes.size_10.rawValue,
                                                            weight: FontStyle.semiBold.uiFontWeight),
-            NSAttributedString.Key.foregroundColor: ThemeManager.shared.color(.primary)
+            NSAttributedString.Key.foregroundColor: ThemeManager.shared.color(.primary),
     ]
         
         // تطبيق مظهر العناصر
@@ -230,10 +238,21 @@ extension MainBars {
         // الحصول على الفهرس المحدد
         guard let index = tabBar.items?.firstIndex(of: item) else { return }
         
+        // تحديث المؤشر الحالي أولاً
+        selectedIndexs = index
+        
         // تحديث موضع المؤشر
         updateIndicatorPosition(forSelectedIndex: index, animated: true)
+        
+        // تطبيق تأثير النبض
+        applyPulseEffectToTabBarItem(at: index)
+        
+        // تحديث عناوين التبويبات - إظهار العنوان المحدد فقط
+        DispatchQueue.main.async {
+            self.updateTabBarItemTitles(selectedIndex: index)
+        }
     }
-    
+
     /// تطبيق تأثير نبض للعنصر المحدد
     private func applyPulseEffectToTabBarItem(at index: Int) {
         
@@ -252,6 +271,57 @@ extension MainBars {
         })
         
     }
+    
+    /// تحديث عناوين التبويبات لإظهار العنوان المحدد فقط
+
+    private func updateTabBarItemTitles(selectedIndex: Int) {
+        guard let items = tabBar.items else { return }
+        
+        // تحديث جميع العناوين
+        for (index, item) in items.enumerated() {
+            if index == selectedIndex {
+                // إظهار العنوان للعنصر المحدد فقط
+                item.title = item.accessibilityLabel
+            } else {
+                // إخفاء العنوان للعناصر غير المحددة
+                item.title = ""
+            }
+        }
+    }
+
+    /// إضافة خلفية للعنصر المحدد
+    private func addBackgroundToSelectedTab(tabBarButton: UIControl) {
+        
+        /// إضافة خلفية للعنصر المحدد
+        removeBackgroundFromTab(tabBarButton: tabBarButton)
+        
+        // إنشاء خلفية جديدة
+        let backgroundView = UIView()
+        backgroundView.tag = 999 // تحديد تاج للخلفية لسهولة العثور عليها لاحقاً
+        backgroundView.backgroundColor = ThemeManager.shared.color(.tabBarBackground)
+        backgroundView.layer.cornerRadius = 15
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // إضافة الخلفية تحت جميع العناصر الأخرى
+        tabBarButton.insertSubview(backgroundView, at: 0)
+        
+        // تكوين قيود الخلفية
+        NSLayoutConstraint.activate([
+            backgroundView.leadingAnchor.constraint(equalTo: tabBarButton.leadingAnchor, constant: 8),
+            backgroundView.trailingAnchor.constraint(equalTo: tabBarButton.trailingAnchor, constant: -8),
+            backgroundView.topAnchor.constraint(equalTo: tabBarButton.topAnchor, constant: 5),
+            backgroundView.bottomAnchor.constraint(equalTo: tabBarButton.bottomAnchor, constant: -5)
+
+            ])
+    }
+    
+    
+    /// إزالة الخلفية من العنصر
+    private func removeBackgroundFromTab(tabBarButton: UIControl) {
+        if let backgroundView = tabBarButton.viewWithTag(999) {
+            backgroundView.removeFromSuperview()
+        }
+    }
 }
 
 struct TabBarItemConfig {
@@ -263,8 +333,8 @@ struct TabBarItemConfig {
 
 enum TitleBar: String, CaseIterable {
     case Home = "HomeTitle"
-    case Notifications = "MassageTitle"
-    case Messages = "NotificationsTitle"
+    case Notifications = "NotificationsTitle"
+    case Messages = "MessagesTitle"
     case Account = "AccountTitle"
     
     var titleName: String {

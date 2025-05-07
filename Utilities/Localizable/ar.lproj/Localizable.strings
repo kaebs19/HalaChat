@@ -16,6 +16,7 @@
 "createAccountLabel"="قم بتعبية البيانات للتسجيل";
 "argeementLabel"="بالنقر فوق تسجيل فإنك توافق على الشروط والأحكام التالية دون تحفظ .";
 "iAgreeLabel"="انا موافق على";
+"forgotPasswordSubtitleLabel" = "يرجى إدخال بريدك الإلكتروني. سيصلك رابط لإنشاء كلمة مرور جديدة عبر البريد الإلكتروني.";
 
 
 
@@ -27,6 +28,7 @@
 "forgotPasswordButton" = "هل نسيت كلمةالسر ؟";
 "TermsButton"= "شروط الاستخدام";
 "ConditionsButton"="سياسية الخصوصية";
+"sendButton" = "أرسال";
 
 
 // ---    Text Field
@@ -43,8 +45,9 @@
 
 "LoginTitle" = "تسجيل دخول";
 "SignUpTitle" = "انشاء حساب جديد";
+"ForgotPasswordTitle" = "أستعادة كلمة المرور";
 
 "HomeTitle" = "استكشف";
-"MassageTitle" = "الرسائل";
+"MessagesTitle" = "الرسائل";
 "NotificationsTitle" = "الإشعارات";
 "AccountTitle" = "حسابي";

@@ -104,7 +104,8 @@ extension WelcomeVC {
     }
     
     @objc func loginTapped() {
-        goToVC(storyboard: .Welcome, identifiers: .LoginVC)
+    //    goToVC(storyboard: .Welcome, identifiers: .LoginVC)
+        goToVC(storyboard: .Main, identifiers: .MainBars)
     }
     
     @objc func signupTapped() {

@@ -31,6 +31,10 @@ class MessagesVC: UIViewController {
 extension MessagesVC {
     
     private func setupUI() {
+        // تطبيق السمة العامة
+        applyTheme()
         
+        self.title = TitleBar.Messages.titleName
+
     }
 }

@@ -14,6 +14,11 @@ enum Titles: String  {
     case Help = "HelpTitle"
     case Login = "LoginTitle"
     case SignUp = "SignUpTitle"
+    case forgotPassword = "ForgotPasswordTitle"
+    case Explore = "ExploreTitle"
+    case Chat = "ChatTitle"
+    case Notifications = "NotificationsTitle"
+    case acconts = "AccountsTitle"
     
     var textTitle: String {
         return self.rawValue.localized
