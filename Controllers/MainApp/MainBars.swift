@@ -96,21 +96,24 @@ extension MainBars {
         let accountConfig = TabBarItemConfig(title: .Account,
                                              selectedImage: AppImage.accountSelected.image ?? UIImage(), unselectedImage: AppImage.accountUnselected.image ?? UIImage())
         
-        // إنشاء ViewControllers
-        let homeVC = UINavigationController(rootViewController: HomeVC())
-        let messagesVC = UINavigationController(rootViewController: MessagesVC())
-        let notificationsVC = UINavigationController(rootViewController: NotificationVC())
-        let accountVC = UINavigationController(rootViewController: AccountVC())
+        guard let viewControllers = self.viewControllers,
+              viewControllers.count >= 4 else { return }
+        if let homeVC = viewControllers[0] as? UINavigationController {
+            configureTabBarItem(for: homeVC, with: homeConfig)
+        }
         
-        // تعيين Tab Bar Items
-        configureTabBarItem(for: homeVC, with: homeConfig)
-        configureTabBarItem(for: messagesVC, with: messagesConfig)
-        configureTabBarItem(for: notificationsVC, with: notificationsConfig)
-        configureTabBarItem(for: accountVC, with: accountConfig)
+        if let messagesVC = viewControllers[1] as? UINavigationController {
+            configureTabBarItem(for: messagesVC, with: messagesConfig)
+        }
         
-        // تعيين Tab Bar Items
-        viewControllers = [homeVC, messagesVC, notificationsVC, accountVC]
-
+        if let notificationsVC = viewControllers[2] as? UINavigationController {
+            configureTabBarItem(for: notificationsVC, with: notificationsConfig)
+        }
+        
+        if let accountVC = viewControllers[3] as? UINavigationController {
+            configureTabBarItem(for: accountVC, with: accountConfig)
+        }
+        
     }
     
     /// تكوين عنصر TabBar لـ ViewController محدد
@@ -256,21 +259,27 @@ extension MainBars {
     /// تطبيق تأثير نبض للعنصر المحدد
     private func applyPulseEffectToTabBarItem(at index: Int) {
         
-        // الحصول على مرجع للعنصر المحدد
-        guard index + 1 < tabBar.subviews.count else { return }
-        let subview = tabBar.subviews[index + 1]
+        let tabBarButtons = tabBar.subviews.filter { $0 is UIControl }
+        guard index < tabBarButtons.count else { return }
+
+        let targetView = tabBarButtons[index]
         
-        // تطبيق التأثير
-        UIView.animate(withDuration: 0.15, animations: {
-            subview.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-        } , completion: { _ in
-            UIView.animate(withDuration: 0.15, animations: {
-                subview.transform = CGAffineTransform.identity
-            })
-            
-        })
+        let pulse = CASpringAnimation(keyPath: "transform.scale")
+        pulse.fromValue = 1.0
+        pulse.toValue = 1.2
+        pulse.duration = pulse.settlingDuration
+        pulse.damping = 7
+        pulse.initialVelocity = 0.5
+        pulse.mass = 0.8
+        pulse.stiffness = 120
+
+        targetView.layer.add(pulse, forKey: "pulse")
+
         
     }
+    
+    
+    
     
     /// تحديث عناوين التبويبات لإظهار العنوان المحدد فقط
 

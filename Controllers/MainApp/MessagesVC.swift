@@ -19,7 +19,7 @@ class MessagesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
+        print("MessagesVC")
     }
     
 

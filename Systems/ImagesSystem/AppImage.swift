@@ -23,6 +23,13 @@ enum AppImage: String , CaseIterable {
     case accountSelected = "account_Select"
     case accountUnselected = "account_UnSelect"
     
+    // Acount
+    
+    case paymoney = "paymoney"
+    case QRCode = "QRCode"
+    case settings = "settings"
+    case signout = "logout"
+    case version = "Version"
     /// الحصول على كائن UIImage مع مراعاة الوضع الحالي (فاتح/مظلم)
     var image: UIImage? {
         return UIImage(named: rawValue)

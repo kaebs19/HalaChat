@@ -12,8 +12,7 @@ class HomeVC: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var titleLabel: UILabel!
-    
+    @IBOutlet weak var showMessagesButton: UIButton!
     
     // MARK: - Variables - Arry
     // معرّف المراقب للسمة
@@ -23,6 +22,7 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        print("HomeVC")
     }
 
 
@@ -36,5 +36,12 @@ extension HomeVC {
         applyTheme()
     
         self.title = TitleBar.Home.titleName
+        
+        if let button = showMessagesButton {
+            button.applyGradient(startColor: .Start, endColor: .End, direction: .horizontal, respectDarkMode: true)
+            button.addRadius(20)
+        } else {
+            print("Warning: showMessagesButton is nil!")
+        }
     }
 }

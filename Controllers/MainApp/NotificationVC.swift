@@ -10,7 +10,7 @@ import UIKit
 class NotificationVC: UIViewController {
     
     // MARK: - Outlets
-
+@IBOutlet weak var persentageView: UIImageView!
     
     // MARK: - Variables - Arry
 
@@ -34,6 +34,5 @@ extension NotificationVC {
         applyTheme()
         
         self.title = TitleBar.Notifications.titleName
-
     }
 }

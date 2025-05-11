@@ -313,3 +313,90 @@ extension UIView {
         }
 
 }
+
+extension UIView {
+    
+    // تعريف الزوايا المختلفة
+
+    enum CornerType {
+        case topLeft
+        case topRight
+        case bottomLeft
+        case bottomRight
+        case allCorners
+        
+        var caCorners: CACornerMask {
+            switch self {
+                case .topLeft:
+                    return .layerMinXMinYCorner
+                case .topRight:
+                    return .layerMaxXMinYCorner
+                case .bottomLeft:
+                    return .layerMinXMaxYCorner
+                case .bottomRight:
+                    return .layerMaxXMaxYCorner
+                case .allCorners:
+                    return [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            }
+        }
+    }
+    
+    
+    
+    /// إضافة انحناء للزوايا المحددة
+    /// - Parameters:
+    ///   - corners: مصفوفة تحتوي على الزوايا التي سيتم تطبيق الانحناء عليها
+    ///   - radius: نصف قطر الانحناء
+
+    func addCorner(corners: [CornerType] , radius: CGFloat) {
+        
+        self.layer.cornerRadius = radius
+        
+        var cornerMask: CACornerMask = []
+        
+        for corner in corners {
+            cornerMask.insert(corner.caCorners)
+        }
+        
+        self.layer.maskedCorners = cornerMask
+        
+        var bezierPath: UIBezierPath?
+        
+        let topLeft = corners.contains(.topLeft) || corners.contains(.allCorners)
+        let topRight = corners.contains(.topRight) || corners.contains(.allCorners)
+        let bottomLeft = corners.contains(.bottomLeft) || corners.contains(.allCorners)
+        let bottomRight = corners.contains(.bottomRight) || corners.contains(.allCorners)
+
+        
+        // إنشاء المسار بناءً على الزوايا المحددة
+        let rect = self.bounds
+        bezierPath = UIBezierPath(roundedRect: rect,
+                                byRoundingCorners: [
+                                    topLeft ? .topLeft : [],
+                                    topRight ? .topRight : [],
+                                    bottomLeft ? .bottomLeft : [],
+                                    bottomRight ? .bottomRight : []
+                                ],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        // إنشاء طبقة القناع وتطبيقها
+        if let bezierPath = bezierPath {
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = bezierPath.cgPath
+            self.layer.mask = maskLayer
+        }
+        // تأكد من استخدام clipsToBounds لعرض الانحناءات بشكل صحيح
+        self.clipsToBounds = true
+
+    }
+    
+    /// إضافة انحناء لزاوية واحدة فقط
+    /// - Parameters:
+    ///   - corner: الزاوية التي سيتم تطبيق الانحناء عليها
+    ///   - radius: نصف قطر الانحناء
+    func addCorner(corner: CornerType, radius: CGFloat) {
+        addCorner(corners: [corner], radius: radius)
+    }
+
+
+}
+

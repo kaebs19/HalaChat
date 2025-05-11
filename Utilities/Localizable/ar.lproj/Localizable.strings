@@ -18,6 +18,9 @@
 "iAgreeLabel"="انا موافق على";
 "forgotPasswordSubtitleLabel" = "يرجى إدخال بريدك الإلكتروني. سيصلك رابط لإنشاء كلمة مرور جديدة عبر البريد الإلكتروني.";
 
+"LogoutTV" = "تسجيل الخروج";
+"LogoutLable" = "تسجل خروج";
+"VersionTV" = "رقم النسخة";
 
 
 // --   Buttons

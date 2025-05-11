@@ -14,6 +14,7 @@ enum Lables: String  {
     case argeement = "argeementLabel"
     case iAgree = "iAgreeLabel"
     case forgotPasswordSubtitle = "forgotPasswordSubtitleLabel"
+    case Logout = "LogoutLable"
     
     var textLib: String {
         return self.rawValue.localized
