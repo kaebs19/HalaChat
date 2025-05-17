@@ -19,9 +19,8 @@
 "argeementLabel"="By clicking Sign up you agree to the following Terms and Conditions without reservation ";
 "iAgreeLabel"="I agree for";
 "forgotPasswordSubtitleLabel" = "Please enter your email address. You will receive a link to create a new password via email.";
-"LogoutTV" = "Sign Out";
 "LogoutLable" = "Sign Out";
-"VersionTV" = "Version";
+"qrCodeSubtitleLabel" = "Hala Chat App users can scan this QR Code to add you as a friend.";
 
 
 // --   Buttons
@@ -53,4 +52,11 @@
 "MessagesTitle" = "Massage";
 "NotificationsTitle" = "Notifications";
 "AccountTitle" = "Account";
+"MyQrCodeTitle" = "My QR Code";
 
+// TableView
+
+"VersionTV" = "Version";
+"MyQRCodeTV" = "My QRCode";
+"PurchaseTV" = "Purchase";
+"SettingsTV" = "Settings";

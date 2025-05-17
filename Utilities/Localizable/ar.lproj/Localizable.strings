@@ -18,9 +18,7 @@
 "iAgreeLabel"="انا موافق على";
 "forgotPasswordSubtitleLabel" = "يرجى إدخال بريدك الإلكتروني. سيصلك رابط لإنشاء كلمة مرور جديدة عبر البريد الإلكتروني.";
 
-"LogoutTV" = "تسجيل الخروج";
-"LogoutLable" = "تسجل خروج";
-"VersionTV" = "رقم النسخة";
+"qrCodeSubtitleLabel" = "يمكن لمستخدمي تطبيق هلا شات مسح رمز الاستجابة السريعة هذا لإضافتك كصديق.";
 
 
 // --   Buttons
@@ -54,3 +52,11 @@
 "MessagesTitle" = "الرسائل";
 "NotificationsTitle" = "الإشعارات";
 "AccountTitle" = "حسابي";
+"MyQrCodeTitle" = "رمز QR الخاص بي";
+
+
+// TableView
+"VersionTV" = "رقم النسخة";
+"MyQRCodeTV" = "كود QR الخاص بي";
+"PurchaseTV" = "الأشتراك VIP";
+"SettingsTV" = "إعدادات";

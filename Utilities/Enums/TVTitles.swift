@@ -16,6 +16,9 @@ enum TVTitles: String {
     case conditions = "ConditionsTV"
     case logout = "LogoutTV"
     case version = "VersionTV"
+    
+    
+    
     var textName: String {
         return self.rawValue.localized
     }

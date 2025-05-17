@@ -397,6 +397,11 @@ extension UIView {
         addCorner(corners: [corner], radius: radius)
     }
 
+    
+    func makeCircular() {
+        self.layer.cornerRadius = min(self.frame.width , self.frame.height) / 2
+        self.layer.masksToBounds = true
+    }
 
 }
 

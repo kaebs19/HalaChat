@@ -18,7 +18,9 @@ enum Titles: String  {
     case Explore = "ExploreTitle"
     case Chat = "ChatTitle"
     case Notifications = "NotificationsTitle"
-    case acconts = "AccountsTitle"
+    case Acconts = "AccountsTitle"
+    case MyQrCode = "MyQrCodeTitle"
+    
     
     var textTitle: String {
         return self.rawValue.localized

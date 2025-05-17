@@ -38,7 +38,9 @@ extension AcountTVCell {
     }
     
     func configure(with acount: Accounts) {
-        titleLbl.customize(text: acount.title.rawValue, color: .text, ofSize: .size_12, font: .poppins)
+        titleLbl.customize(text: acount.title.textName,
+                           color: .text, ofSize: .size_12,
+                           font: .poppins ,fontStyle: .semiBold )
         iconImg.image = UIImage(named: acount.icon.rawValue)
     }
 }

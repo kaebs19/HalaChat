@@ -15,12 +15,11 @@ class AccountVC: UIViewController {
     @IBOutlet weak var roleLabel: UILabel!
     @IBOutlet weak var hedeerView: UIView!
     @IBOutlet weak var editProfileIMageView: UIImageView!
-    @IBOutlet weak var editProfileBtn: UIButton!
+    @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoutLabel : UILabel!
     @IBOutlet weak var logoutImageView : UIImageView!
-    @IBOutlet weak var logoutButton : UIButton!
-    @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var signouttButton : UIButton!
     
     
     // MARK: - Variables - Arry
@@ -29,7 +28,7 @@ class AccountVC: UIViewController {
         Accounts(title: .myQrCode, icon: .QRCode),
         Accounts(title: .purchase, icon: .paymoney),
         Accounts(title: .settings, icon: .settings),
-        Accounts(title: .logout, icon: .signout)
+        Accounts(title: .version, icon: .version)
     ]
     
     // MARK: - Lifecycle
@@ -104,6 +103,19 @@ extension AccountVC {
         hedeerView.addCorner(corners: [.topLeft , .topRight], radius: 16)
         
     }
+    
+    private func setupButtons() {
+        editProfileButton.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
+        signouttButton.addTarget(self, action: #selector(signoutTapped), for: .touchUpInside)
+    }
+    
+    @objc func editProfileTapped() {
+        print("edit profile")
+    }
+    
+    @objc func signoutTapped() {
+        print("signout")
+    }
 }
 
 
@@ -114,15 +126,21 @@ extension AccountVC {
                               delegate: self , dataSource: self)
         tv.separatorStyle = .singleLine
         tv.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        tv.hideVerticalScrollIndicator()
+        tv.disableScroll()
     }
 }
 
 
 extension AccountVC: UITableViewDelegate {
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
                 case 0:
                 print("qu code")
+                goToVC(storyboard: .Main ,  identifiers: .MyQRCodeVC , navigationStyle: .present(animated: true, completion: {
+                }))
                 case 1:
                 print("payment")
                 case 2:
@@ -130,6 +148,14 @@ extension AccountVC: UITableViewDelegate {
             default:
                 print("sttings")
         }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 

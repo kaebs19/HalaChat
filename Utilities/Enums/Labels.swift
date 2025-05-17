@@ -15,6 +15,7 @@ enum Lables: String  {
     case iAgree = "iAgreeLabel"
     case forgotPasswordSubtitle = "forgotPasswordSubtitleLabel"
     case Logout = "LogoutLable"
+    case qrCodeSubtitle = "qrCodeSubtitleLabel"
     
     var textLib: String {
         return self.rawValue.localized

@@ -74,6 +74,11 @@ extension UITableView {
         self.showsHorizontalScrollIndicator = !isHidden
     }
     
+    /// إيقاف التمرير تمامًا
+
+    func disableScroll() {
+        isScrollEnabled = false
+    }
 
     
     // MARK: - Configuration Methods
