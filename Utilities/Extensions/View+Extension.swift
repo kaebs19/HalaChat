@@ -405,3 +405,101 @@ extension UIView {
 
 }
 
+
+
+extension UIView {
+    
+    // MARK: - تهيئة Container Views
+    
+    // MARK: - تهيئة Container Views
+    
+    /// تهيئة شاملة للـ container لتجنب تكرار الكود
+    /// - Parameters:
+    ///   - color: لون الخلفية من نظام الألوان
+    ///   - radius: نصف قطر الزوايا (0 لعدم استخدام زوايا منحنية)
+    ///   - corners: الزوايا المراد تطبيق الانحناء عليها (فارغة لتطبيق الانحناء على جميع الزوايا)
+    ///   - border: إعدادات الحدود (nil لعدم استخدام حدود)
+    ///   - shadow: إعدادات الظل (nil لعدم استخدام ظل)
+    ///   - blur: إعدادات تأثير الضبابية (nil لعدم استخدام الضبابية)
+
+    func setupContainerView(withColor color: AppColors = .titleViewBackground,
+                            radius: CGFloat = 0,
+                            corners: [CornerType] = [],
+                            border: (color: AppColors, width: CGFloat)? = nil,
+                            shadow: (color: AppColors, opacity: Float, offset: CGSize, radius: CGFloat)? = nil
+                            
+
+    ) {
+        // 1. تطبيق لون الخلفية
+        backgroundColor = color.color
+        
+        // 2. تطبيق الزوايا المنحنية
+        if !corners.isEmpty && radius > 0 {
+            // زوايا محددة مع نصف قطر
+            addCorner(corners: corners, radius: radius)
+        } else if radius > 0 {
+            // جميع الزوايا بنفس نصف القطر
+            addRadius(radius)
+        }
+        // 3. تطبيق الحدود إذا تم تحديدها
+        if let boarderSettings = border {
+            setThemeBorderColor(boarderSettings.color, width: boarderSettings.width)
+        }
+        
+        // 4. تطبيق الظل إذا تم تحديده
+        if let shadowSettings = shadow {
+                  setThemeShadow(
+                      colorSet: shadowSettings.color,
+                      radius: shadowSettings.radius,
+                      opacity: shadowSettings.opacity,
+                      offset: shadowSettings.offset
+                  )
+              }
+        
+        // 5. تطبيق تأثير الضبابية إذا تم تحديده
+//              if let blurStyle = blur {
+//                  applyBlurEffect(style: blurStyle)
+//              }
+    }
+    
+    // MARK: - واجهات تهيئة متخصصة للاستخدام الشائع
+    
+    /// تهيئة container رئيسي للتطبيق
+    func setupAnTitleContainer(color: AppColors = .mainBackground) {
+        setupContainerView(withColor: color)
+    }
+    
+    /// تهيئة container للمحتوى
+    func setupAsContentContainer(color: AppColors = .secondBackground, radius: CGFloat = 0, addShadow: Bool = false) {
+        var shadowSettings: (color: AppColors, opacity: Float, offset: CGSize, radius: CGFloat)? = nil
+        
+        if addShadow {
+            shadowSettings = (.shadow, 0.15, CGSize(width: 0, height: 2), 4.0)
+        }
+        
+        setupContainerView(withColor: color, radius: radius, shadow: shadowSettings)
+    }
+    
+    /// تهيئة container للأزرار الدائرية
+    func setupAsCircularControl(color: AppColors = .secondBackground) {
+        setThemeTintColor(color)
+        makeCircular()
+    }
+    
+    /// تهيئة container مع تأثير الضبابية
+//    func setupAsBlurContainer(style: UIBlurEffect.Style = .systemMaterial, radius: CGFloat = 0) {
+//        setupContainerView(withColor: .clear, radius: radius, blur: style)
+//    }
+    
+    /// تهيئة container للبطاقات (Cards)
+    func setupAsCardContainer(color: AppColors = .card, radius: CGFloat = 8, addShadow: Bool = true) {
+        var shadowSettings: (color: AppColors, opacity: Float, offset: CGSize, radius: CGFloat)? = nil
+        
+        if addShadow {
+            shadowSettings = (.shadow, 0.1, CGSize(width: 0, height: 2), 4.0)
+        }
+        
+        setupContainerView(withColor: color, radius: radius, shadow: shadowSettings)
+    }
+
+}

@@ -18,6 +18,7 @@ enum AppColors: String, CaseIterable {
     case tabBarBackground = "TabBarBackground"
     case headerBackground = "HeaderBackground"
     case titleViewBackground = "TitleViewBackground"
+    case iconTint = "IconTint"
     
     // ألوان إضافية
     case success = "Success"

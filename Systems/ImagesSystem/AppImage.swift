@@ -12,6 +12,21 @@ enum AppImage: String , CaseIterable {
     case close = "close_icon"
     case Eye_on = "eye"
     case Eye_off = "eye-off"
+    case Share = "share"
+    case Save = "save"
+    case Refresh = "refresh"
+    case Forward = "forward"
+    
+    // setting
+    case AccountSettings = "accountSettings"
+    case Annoucement = "annoucement"
+    case Appearance = "appearance"
+    case Helpcenter = "helpcenter"
+    case Info = "info"
+    case Message = "message"
+    case Notification = "notification"
+    case Privacy = "privacy"
+    
     
     // TabBars
     case homeSelected = "home_Select"

@@ -13,10 +13,13 @@ class MyQRCodeVC: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var claseImageView: UIImageView!
     @IBOutlet weak var claseButton: UIButton!
- //   @IBOutlet weak var qrCodeImageView: UIImageView!
+   // @IBOutlet weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var myQrCodeView: UIView!
     @IBOutlet  var iconsViews: [UIView]!
+    @IBOutlet weak var sharImageView: UIImageView!
+    @IBOutlet weak var saveImageView: UIImageView!
+    @IBOutlet weak var refreshImageView: UIImageView!
 
     
     // MARK: - Variables - Arry
@@ -66,6 +69,7 @@ extension MyQRCodeVC {
     private func setup() {
         // تطبيق السمة العامة
         applyTheme()
+        self.view.setThemeBackgroundColor(.mainBackground)
         updateCustomUIElements()
     }
     
@@ -80,13 +84,17 @@ extension MyQRCodeVC {
     }
     
     private func setupImageViews() {
-    
+        sharImageView.image = ThemeImage.tintedImage(for: .Share, with: .iconTint)
+        saveImageView.image = ThemeImage.tintedImage(for: .Save, with: .text)
+        refreshImageView.image = ThemeImage.tintedImage(for: .Refresh, with: .text)
+        
     }
     
     private func setupViews() {
         containerView.setThemeBackgroundColor(.titleViewBackground)
         
         myQrCodeView.addRadius(6)
+        
         iconsViews.forEach { view in
             view.makeCircular()
             view.setThemeBackgroundColor(.secondBackground)

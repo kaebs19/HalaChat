@@ -147,6 +147,7 @@ extension AccountVC: UITableViewDelegate {
                 print("Version")
             default:
                 print("sttings")
+                goToVC(storyboard: .Main, identifiers: .SettingsVC , navigationStyle: .present(animated: true, completion: nil))
         }
     }
     

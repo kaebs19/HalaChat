@@ -20,7 +20,7 @@ enum Titles: String  {
     case Notifications = "NotificationsTitle"
     case Acconts = "AccountsTitle"
     case MyQrCode = "MyQrCodeTitle"
-    
+    case Settings = "SettingsTitle"
     
     var textTitle: String {
         return self.rawValue.localized

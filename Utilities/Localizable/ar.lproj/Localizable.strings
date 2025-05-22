@@ -19,6 +19,8 @@
 "forgotPasswordSubtitleLabel" = "يرجى إدخال بريدك الإلكتروني. سيصلك رابط لإنشاء كلمة مرور جديدة عبر البريد الإلكتروني.";
 
 "qrCodeSubtitleLabel" = "يمكن لمستخدمي تطبيق هلا شات مسح رمز الاستجابة السريعة هذا لإضافتك كصديق.";
+"lightModeLabel" = "فاتح";
+"darkModeLabel" = "مظلم";
 
 
 // --   Buttons
@@ -53,6 +55,7 @@
 "NotificationsTitle" = "الإشعارات";
 "AccountTitle" = "حسابي";
 "MyQrCodeTitle" = "رمز QR الخاص بي";
+"SettingsTitle" = "الأعدادات";
 
 
 // TableView
@@ -60,3 +63,11 @@
 "MyQRCodeTV" = "كود QR الخاص بي";
 "PurchaseTV" = "الأشتراك VIP";
 "SettingsTV" = "إعدادات";
+"AccountSettingsTV" = "إعدادات الحساب";
+"MessageSettingsTV" = "الرسائل";
+"NotificationSettingsTV" = "الإشعارات";
+"AppearanceSettingsTV" = "المظهر";
+"AnnouncementsSettingsTV" = "الإعلانات";
+"PrivacySettingsTV" = "الخصوصية";
+"HelpAndSupportSettingsTV" = "مركز المساعدة";
+"AboutUsSettingsTV" = "حول تطبيق هلا شات";

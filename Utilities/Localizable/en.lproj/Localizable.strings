@@ -21,6 +21,8 @@
 "forgotPasswordSubtitleLabel" = "Please enter your email address. You will receive a link to create a new password via email.";
 "LogoutLable" = "Sign Out";
 "qrCodeSubtitleLabel" = "Hala Chat App users can scan this QR Code to add you as a friend.";
+"lightModeLabel" = "Light";
+"darkModeLabel" = "Dark";
 
 
 // --   Buttons
@@ -53,6 +55,7 @@
 "NotificationsTitle" = "Notifications";
 "AccountTitle" = "Account";
 "MyQrCodeTitle" = "My QR Code";
+"SettingsTitle" = "Settings";
 
 // TableView
 
@@ -60,3 +63,12 @@
 "MyQRCodeTV" = "My QRCode";
 "PurchaseTV" = "Purchase";
 "SettingsTV" = "Settings";
+ "AccountSettingsTV" = "Account Settings";
+ "MessageSettingsTV" = "Messaging";
+ "NotificationSettingsTV" = "Notifications";
+ "AppearanceSettingsTV" = "Appearance";
+"AnnouncementsSettingsTV" = "Announcements";
+"PrivacySettingsTV" = "Privacy";
+ "HelpAndSupportSettingsTV" = "Help Center";
+ "AboutUsSettingsTV" = "About Hala Chat App";
+

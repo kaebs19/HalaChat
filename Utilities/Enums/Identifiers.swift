@@ -21,4 +21,5 @@ enum Identifiers: String {
     case AccountVC = "AccountVC"
     case ForgetPasswordVC = "ForgetPasswordVC"
     case MyQRCodeVC = "MyQRCodeVC"
+    case SettingsVC = "SettingsVC"
 }
