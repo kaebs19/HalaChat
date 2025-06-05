@@ -23,7 +23,7 @@ class AccountVC: UIViewController {
     
     
     // MARK: - Variables - Arry
-    private var themeObserverID: UUID?
+
     private var accountItems: [Accounts] = [
         Accounts(title: .myQrCode, icon: .QRCode),
         Accounts(title: .purchase, icon: .paymoney),
@@ -34,36 +34,21 @@ class AccountVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        // تطبيق السمة العامة
+        enableInstantTheme(transitionStyle: .snapshot)
 
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // تحديث أي عناصر خاصة عند تغيير السمة
-        themeObserverID = setupThemeObserver { [weak self] in
-            self?.updateCustomUIElements()
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // تنظيف وازالة العناصر
-        clearThemeObserver(id: themeObserverID)
-        themeObserverID = nil
-    }
-    
-    deinit {
-        // تأكيد إضافي على تنظيف الموارد
-        clearThemeObserver(id: themeObserverID)
-        themeObserverID = nil
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         setup()
-        updateCustomUIElements()
+    
     }
+    
+    // 🔄 دالة التحديث التلقائي للألوان (يتم استدعاؤها تلقائياً عند تغيير السمة)
+    override func applyInstantThemeUpdate() {
+        super.applyInstantThemeUpdate()
+        // ✅ تحديث ألوان العناصر عند تغيير السمة
+        updateThemeColors()
+        
+    }
+  
     
 }
 
@@ -72,39 +57,72 @@ class AccountVC: UIViewController {
 extension AccountVC {
     
     func setup() {
-        // تطبيق السمة العامة
-        applyTheme()
+
         self.title = TitleBar.Account.titleName
-        updateCustomUIElements()
+        // 🎨 إعداد خلفية الشاشة العامة
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
+        
+        // 📝 إعداد العناوين والنصوص
+
+        
+        // 📝 إعداد العناوين والنصوص
+        setupLabels()
+        
+        // 🖼️ إعداد الصور
+        setupImageViews()
+        
+        //  إعداد المناظر (Views)
+        setupViews()
+        
+        // 🔘 إعداد الأزرار
+        setupButtons()
+        
+        // 📋 إعداد الجدول
         setupTV(tv: tableView)
+
+        
         
     }
     
-    private func updateCustomUIElements() {
-        nameLabel.customize(text: "الاسم",
-                            color: .text, ofSize: .size_20,
-                            font: .poppins , fontStyle: .extraBold)
-        roleLabel.customize(text: "عضو نشط",
-                            color: .text, ofSize: .size_12, font: .poppins)
-        setupViews()
-        logoutLabel.customize(text: Lables.signup.textLib,
-                              color: .onlyRed, ofSize: .size_14,
-                              font: .cairo , fontStyle: .semiBold)
+//    private func updateCustomUIElements() {
+//        setupImageViews()
+//        
+//        
+//        setupViews()
+//
+//    }
+    
+    private func setupLabels() {
+        nameLabel.setupForInstantTheme(text: "الاسم", textColorSet: .text,
+                                       font: .poppins, fontStyle: .extraBold,
+                                       ofSize: .size_20 ,
+                                       direction: .auto)
+        
+        roleLabel.setupForInstantTheme(text: "عضو نشط", textColorSet: .text,
+                                       font: .poppins, ofSize: .size_12 ,
+                                       direction: .auto)
+        
+        logoutLabel.setupForInstantTheme(text: Lables.signup.textLib, textColorSet: .onlyRed,
+                                         font: .cairo, fontStyle: .semiBold,
+                                         ofSize: .size_14 ,
+                                         direction: .auto)
+
     }
     
+    /// إعداد الصور والأيقونات
     private func setupImageViews() {
         profileImageView.image = UIImage(systemName: "person.circle.fill")
-        logoutImageView.image = ThemeImage.image(name: AppImage.signout.rawValue)
+        logoutImageView.image = ThemeImage.image(named: AppImage.signout.rawValue)
         
     }
     
     private func setupViews() {
-        hedeerView.setThemeBackgroundColor(.headerBackground)
         hedeerView.addCorner(corners: [.topLeft , .topRight], radius: 16)
-        
+        hedeerView.setupForInstantTheme(backgroundColorSet: .headerBackground)
     }
     
     private func setupButtons() {
+        // 🔗 ربط الإجراءات
         editProfileButton.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
         signouttButton.addTarget(self, action: #selector(signoutTapped), for: .touchUpInside)
     }
@@ -115,6 +133,74 @@ extension AccountVC {
     
     @objc func signoutTapped() {
         print("signout")
+    }
+    
+    
+    /// تحديث ألوان العناصر عند تغيير السمة
+   
+}
+
+// MARK: - ✅ Theme Updates (التحديث التلقائي للألوان)
+
+extension AccountVC {
+    
+    /// تحديث ألوان العناصر عند تغيير السمة
+    private func updateThemeColors() {
+        // 🎨 تحديث خلفية الشاشة
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
+        
+        // 📝 تحديث ألوان العناوين (تلقائي)
+        updateLabelsTheme()
+        
+        // 🖼️ تحديث ألوان الصور (تلقائي)
+        updateImageViewsTheme()
+        
+        // 🏗️ تحديث ألوان المناظر (تلقائي)
+        updateViewsTheme()
+        
+        // 🔘 تحديث ألوان الأزرار (تلقائي)
+        updateButtonsTheme()
+        
+        // 📋 تحديث ألوان الجدول (تلقائي)
+        updateTableViewTheme()
+        
+        // 🎯 ملاحظة: هذه الدالة تستدعى تلقائياً عند تغيير السمة
+
+    }
+    
+    /// تحديث ألوان العناوين
+    private func updateLabelsTheme() {
+        
+        // ✅ تحديث تلقائي باستخدام المعاملات المحفوظة
+        [nameLabel, roleLabel , logoutLabel].forEach { lables in
+            lables?.updateInstantThemeColors()
+        }
+        
+    }
+    
+    /// تحديث ألوان الصور
+    private func updateImageViewsTheme() {
+        [profileImageView , logoutImageView].forEach { images in
+            images.updateInstantThemeColors()
+        }
+        
+    }
+    
+    private func updateViewsTheme() {
+        hedeerView.updateInstantThemeColors()
+        tableView.updateInstantThemeColors()
+    }
+    
+    /// تحديث ألوان الأزرار
+    private func updateButtonsTheme() {
+        [editProfileButton , signouttButton].forEach { buttons in
+                //   buttons?.updateInstantThemeColors(titleColorSet: <#T##AppColors#>)
+        }
+    }
+    
+    /// تحديث ألوان الجدول
+    private func updateTableViewTheme() {
+        tableView.reloadData()
     }
 }
 
@@ -144,10 +230,11 @@ extension AccountVC: UITableViewDelegate {
                 case 1:
                 print("payment")
                 case 2:
-                print("Version")
-            default:
                 print("sttings")
                 goToVC(storyboard: .Main, identifiers: .SettingsVC , navigationStyle: .present(animated: true, completion: nil))
+            default:
+                print("Version")
+
         }
     }
     
@@ -158,6 +245,7 @@ extension AccountVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
 }
 
 extension AccountVC: UITableViewDataSource {

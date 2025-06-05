@@ -6,136 +6,148 @@
 //
 
 import UIKit
+import MOLH
 
 // MARK: - مدير التنقل بين واجهات التطبيق
 // مسؤول عن التعامل مع منطق الانتقال بين الواجهات وتحديد الواجهة المناسبة عند بدء التطبيق
 
 class AppNavigationManager {
     
-    // نمط للوصول الموحد للكائن
     static let shared = AppNavigationManager()
-    
-    // مُنشئ خاص لمنع إنشاء نسخ متعددة
     private init() {}
     
-    
-    // MARK: - خصائص مساعدة
-    
-    private var appWindow: UIWindow? {
-        return UIApplication.shared.windows.first
-    }
-    
-    // الحصول على أول مشهد
-    private var firstScene: UIWindowScene? {
-        return UIApplication.shared.connectedScenes.first as? UIWindowScene
-    }
-    
-    // الحصول على أول نافذة من المشهد
-    private var sceneWindow: UIWindow? {
-        guard let windowScene = firstScene else { return nil }
-        return windowScene.windows.first
-    }
-    
-    // الحصول على نافذة التطبيق الحالية (بطريقة متوافقة مع iOS 13+)
+    // MARK: - Window Access
     private var window: UIWindow? {
         if #available(iOS 13.0, *) {
-            return sceneWindow
+            return UIApplication.shared.connectedScenes
+                .first { $0.activationState == .foregroundActive }
+                .flatMap { $0 as? UIWindowScene }?.windows
+                .first { $0.isKeyWindow }
         } else {
-            return appWindow
+            return UIApplication.shared.keyWindow
         }
     }
     
-    // MARK: - وظائف التحقق والتنقل
-    /// تحديد الواجهة الأولية بناءً على حالة المستخدم
-    /// - Returns: وحدة تحكم العرض الجذر المناسبة
+    // MARK: - Core Navigation
     func determineInitialViewController() -> UIViewController {
-        
-        // إذا لم يشاهد المستخدم واجهة التعريف (Onboarding) من قبل
         if !UserDefault.shared.isOnboarding {
             return createOnboardingViewController()
-            
         } else if !UserDefault.shared.isLoggedIn {
-            
-            // إذا لم يسجل المستخدم الدخول بعد
             return createWelcomeViewController()
-            
         } else {
-            // المستخدم مسجل دخوله بالفعل، انتقل إلى الواجهة الرئيسية
             return createMainAppController()
         }
     }
     
-    /// تعيين جذر التطبيق إلى وحدة تحكم معينة
-    /// - Parameter viewController: وحدة التحكم المراد جعلها الجذر
     func setRootViewController(_ viewController: UIViewController, animated: Bool = true) {
-        
-        guard let window = self.window else {
-            print("خطأ: لا يمكن الوصول إلى نافذة التطبيق")
-            return
-        }
+        guard let window = self.window else { return }
         
         if animated {
             UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 window.rootViewController = viewController
-            } , completion: nil)
+            }, completion: nil)
         } else {
             window.rootViewController = viewController
         }
     }
     
-    /// تطبيق الواجهة المناسبة بناءً على حالة المستخدم الحالية
-    func applyAppropriateInterface(animated: Bool = true) {
-        let initialViewController = determineInitialViewController()
-        setRootViewController(initialViewController, animated: animated)
-    }
-    
-    // MARK: - إنشاء وحدات تحكم مختلفة
-    /// إنشاء وحدة تحكم واجهة التعريف (Onboarding)
-    /// - Returns: وحدة تحكم واجهة التعريف
+    // MARK: - View Controller Creation
     private func createOnboardingViewController() -> UIViewController {
         let storyboard = UIStoryboard(name: Storyboards.Onboarding.rawValue, bundle: nil)
         let onboardingVC = storyboard.instantiateViewController(withIdentifier: Identifiers.OnboardingVC.rawValue)
         return UINavigationController(rootViewController: onboardingVC)
     }
     
-    /// إنشاء وحدة تحكم تسجيل الدخول
-    /// - Returns: وحدة تحكم تسجيل الدخول
     private func createWelcomeViewController() -> UIViewController {
         let storyboard = UIStoryboard(name: Storyboards.Welcome.rawValue, bundle: nil)
         let welcomeVC = storyboard.instantiateViewController(withIdentifier: Identifiers.WelcomeVC.rawValue)
         return UINavigationController(rootViewController: welcomeVC)
     }
     
-    /// إنشاء وحدة تحكم التطبيق الرئيسية
-    /// - Returns: وحدة تحكم التطبيق الرئيسية
     func createMainAppController() -> UIViewController {
         let storyboard = UIStoryboard(name: Storyboards.Main.rawValue, bundle: nil)
         let mainAppVC = storyboard.instantiateViewController(withIdentifier: Identifiers.HomeVC.rawValue)
         return UINavigationController(rootViewController: mainAppVC)
     }
     
-    
-    /// MARK: - وظائف انتقال محددة
+    // MARK: - Navigation Actions
     func moveFromOnboardingToWelcome() {
-        // تحديث UserDefaults ليعرف أن المستخدم قد شاهد Onboarding
         UserDefault.shared.isOnboarding = true
-        // إنشاء وحدة تحكم Welcome
         let welcomeVC = createWelcomeViewController()
-        // تعيين وحدة التحكم كجذر
         setRootViewController(welcomeVC)
     }
     
-    /// الانتقال من تسجيل الدخول إلى التطبيق الرئيسي بعد تسجيل دخول ناجح
     func moveFromWelcomeToMainApp() {
         UserDefault.shared.isLoggedIn = true
         let mainAppVC = createMainAppController()
         setRootViewController(mainAppVC)
     }
     
-    /// تسجيل الخروج من التطبيق
     func logout() {
         UserDefault.shared.isLoggedIn = false
         let loginVC = createWelcomeViewController()
         setRootViewController(loginVC)
     }
-} 
+}
+
+
+extension AppNavigationManager {
+    
+    /// إعادة تشغيل التطبيق بطريقة أكثر فعالية
+    func forceRestartApp() {
+        guard let window = self.window else { return }
+        
+        // حفظ جميع البيانات المعلقة
+        UserDefaults.standard.synchronize()
+        
+        // إنشاء واجهة جديدة تماماً
+        let newWindow = UIWindow(frame: window.frame)
+        newWindow.windowScene = window.windowScene
+        
+        // تطبيق اللغة والسمة
+        let savedLanguage = LanguageManager.shared.currentLanguage
+        MOLH.setLanguageTo(savedLanguage.code)
+        ThemeManager.shared.applyCurrentTheme()
+        
+        // تحديد الواجهة الجديدة
+        let initialViewController = self.determineInitialViewController()
+        newWindow.rootViewController = initialViewController
+        
+        // استبدال النافذة القديمة
+        newWindow.makeKeyAndVisible()
+        
+        // إزالة النافذة القديمة بعد تأخير
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            window.isHidden = true
+        }
+    }
+    
+    
+    
+}
+
+
+extension AppNavigationManager {
+    
+    /// إعادة تشغيل بسيط وآمن
+    func simpleRestart() {
+        guard let window = self.window else { return }
+        
+        // تطبيق اللغة
+        let savedLanguage = LanguageManager.shared.currentLanguage
+        MOLH.setLanguageTo(savedLanguage.code)
+        
+        // تطبيق السمة
+        ThemeManager.shared.applyCurrentTheme()
+        
+        // إنشاء الواجهة الجديدة
+        let initialViewController = self.determineInitialViewController()
+        
+        // تطبيق الانتقال
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = initialViewController
+        }, completion: nil)
+    }
+}
+
+

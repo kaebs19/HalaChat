@@ -16,6 +16,7 @@ enum TextFields: String  {
     case phoneNumber = "phoneNumberTF"
     case username = "usernameTF"
     case dateOfBirth = "dateOfBirthTF"
+    case searech = "searechTF"
    
     var textTF: String {
         return self.rawValue.localized

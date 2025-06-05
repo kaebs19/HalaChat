@@ -11,7 +11,6 @@ class MainBars: UITabBarController {
     
     // MARK: - Properties
     private var selectedIndexs: Int = 0
-    private var themeObserver: UUID?
     private var indicatorView: UIView?
     private var indicatorConstraints: [NSLayoutConstraint] = []
     
@@ -20,20 +19,15 @@ class MainBars: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        // ✅ إضافة: تفعيل نظام السمة الجديد
+        enableInstantTheme(transitionStyle: .snapshot)
 
         DispatchQueue.main.async {
             self.updateTabBarItemTitles(selectedIndex: self.selectedIndex)
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // تحديث أي عناصر خاصة عند تغيير السمة
-        themeObserver = setupThemeObserver { [weak self] in
-            self?.customizeTabBarAppearance()
-            self?.updateIndicatorPosition(forSelectedIndex: self?.selectedIndexs ?? 0, animated: true)
-        }
-    }
+  
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -43,19 +37,6 @@ class MainBars: UITabBarController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // تنظيق وازالة العناصر
-        clearThemeObserver(id: themeObserver)
-        themeObserver = nil
-    }
-    
-    
-    deinit {
-        // تأكيد إضافي على تنظيف الموارد
-        clearThemeObserver(id: themeObserver)
-        themeObserver = nil
-    }
 
     
 }
@@ -141,7 +122,7 @@ extension MainBars {
         // تخصيص الخلفية
         appearance.configureWithOpaqueBackground()
         
-        appearance.backgroundColor = ThemeManager.shared.color(.tabBar)
+        appearance.backgroundColor = ThemeManager.shared.color(.tabBarBackground)
         
         // تخصيص الحدود العلوية
         appearance.shadowColor = ThemeManager.shared.color(.separator).withAlphaComponent(0.3)
@@ -169,6 +150,8 @@ extension MainBars {
         
         // تطبيق المظهر على TabBar
         tabBar.standardAppearance = appearance
+        
+        // ✅ تحديث: إضافة فحص الإصدار
         if #available(iOS 15.0, *) {
             tabBar.scrollEdgeAppearance = appearance
         }
@@ -189,6 +172,7 @@ extension MainBars {
         
         // إنشاء المؤشر
         let indicator = UIView()
+        
         indicator.backgroundColor = ThemeManager.shared.color(.primary)
         indicator.layer.cornerRadius = 2
         indicator.translatesAutoresizingMaskIntoConstraints = false

@@ -17,17 +17,7 @@ enum TVTitles: String {
     case logout = "LogoutTV"
     case version = "VersionTV"
     
-    // settings
-    case account = "AccountSettingsTV"
-    case message = "MessageSettingsTV"
-    case notification = "NotificationSettingsTV"
-    case appearance = "AppearanceSettingsTV"
-    case Announcements = "AnnouncementsSettingsTV"
-    case HelpCenter = "HelpAndSupportSettingsTV"
-    case Privacy = "PrivacySettingsTV"
-    case AboutUs = "AboutUsSettingsTV"
-    
-    
+
     var textName: String {
         return self.rawValue.localized
     }

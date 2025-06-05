@@ -23,36 +23,21 @@ class MyQRCodeVC: UIViewController {
 
     
     // MARK: - Variables - Arry
-    private var themeObserver: UUID?
 
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        // تطبيق السمة العامة
+        enableInstantTheme(transitionStyle: .crossDissolve)
+    }
+    
+    override func applyInstantThemeUpdate() {
+        super.applyInstantThemeUpdate()
+        updateCustomUIElements()
+    }
 
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // تحديث أي عناصر خاصة عند تغيير السمة
-        themeObserver = setupThemeObserver { [weak self] in
-            self?.updateCustomUIElements()
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // تنظيف وازالة العناصر
-         clearThemeObserver(id: themeObserver)
-        themeObserver = nil
-    }
-    
-    deinit {
-        // تأكيد إضافي على تنظيف الموارد
-        clearThemeObserver(id: themeObserver)
-        themeObserver = nil
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setup()
@@ -67,8 +52,7 @@ class MyQRCodeVC: UIViewController {
 extension MyQRCodeVC {
     
     private func setup() {
-        // تطبيق السمة العامة
-        applyTheme()
+
         self.view.setThemeBackgroundColor(.mainBackground)
         updateCustomUIElements()
     }

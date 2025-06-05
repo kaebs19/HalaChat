@@ -21,6 +21,13 @@ class NotificationVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         
+        // تطبيق السمة العامة
+        enableInstantTheme(transitionStyle: .snapshot)
+    }
+    
+    override func applyInstantThemeUpdate() {
+        super.applyInstantThemeUpdate()
+        updateViewConstraints()
     }
     
 }
@@ -30,9 +37,6 @@ class NotificationVC: UIViewController {
 extension NotificationVC {
     
     private func setupUI() {
-        // تطبيق السمة العامة
-        applyTheme()
-        
         self.title = TitleBar.Notifications.titleName
     }
 }

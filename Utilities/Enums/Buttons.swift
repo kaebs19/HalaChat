@@ -17,6 +17,8 @@ enum Buttons: String  {
     case terms = "TermsButton"
     case conditions = "ConditionsButton"
     case send = "sendButton"
+    case done = "doneButton"
+    case cancel = "cancelButton"
     
     var textBtn: String {
         return self.rawValue.localized

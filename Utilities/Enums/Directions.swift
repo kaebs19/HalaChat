@@ -4,7 +4,7 @@ import MOLH
 
 enum Directions {
     
-    case Left
+    case left
     case Right
     case Center
     case Normal
@@ -15,7 +15,7 @@ enum Directions {
         switch self {
                 
             case .Right: return .right
-            case .Left: return .left
+            case .left: return .left
             case .Center: return .center
             case .Normal: return .natural
             case .auto:

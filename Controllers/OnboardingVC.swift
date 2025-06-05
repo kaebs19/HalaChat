@@ -14,7 +14,6 @@ class OnboardingVC: UIViewController {
     
     
     // MARK: - Properties
-    private var themeObserverId: UUID?
     private var onboardingList: [Onboarding] = Onboarding.onbordings
     private var currentIndex: Int = 0     // لتتبع الشاشة الحالية
     
@@ -23,27 +22,15 @@ class OnboardingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // تسجيل للاستماع لتغييرات الثيم
-        registerForThemeChanges()
-        
         setupUI()
+        
+        enableInstantTheme(transitionStyle: .snapshot)
         
         // عرض أول شاشة onboarding
         updateOnboardingContent(index: currentIndex)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // إلغاء مراقبة تغييرات الثيم
-        unregisterFromThemeChanges()
-    }
-    
-    // تنفيذ عند تغيير الثيم
-    override func themeDidChange() {
-        super.themeDidChange()
-        updateCustomUIElements()
-    }
+
+  
     
     // MARK: - Actions
     @IBAction func skipButtonTapped(_ sender: Any) {
@@ -59,8 +46,8 @@ class OnboardingVC: UIViewController {
 extension OnboardingVC {
     
     private func setupUI() {
-        // تطبيق تنسيق أساسي
-        applyTheme()
+        
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
         
         // تخصيص العناصر
         updateCustomUIElements()
@@ -76,20 +63,18 @@ extension OnboardingVC {
     
     private func setupThemeColors() {
         // تطبيق الألوان الأساسية
-        view.setThemeBackgroundColor(.background)
-        mainView.setThemeBackgroundColor(.background)
-        imageNextView.setThemeTintColor(.primary)
+        mainView.backgroundColor = ThemeManager.shared.color(.background)
+        
+       // imageNextView.setThemeTintColor(.primary)
+        
     }
     
     private func updateCustomUIElements() {
         // تحديث ألوان العناصر
-        skipButton.customize(
-            title: .skip,
-            titleColor: .text,
-            ofSize: .size_14,
-            font: .poppins,
-            fontStyle: .regular
-        )
+        skipButton.setupForInstantTheme(title: .skip,
+                                        titleColorSet: .text,
+                                        ofSize: .size_14,
+                                        font: .poppins ,fontStyle: .regular)
         
         // تخصيص تأثيرات الانتقال للصورة
         animitionIMageView.contentMode = .scaleAspectFit

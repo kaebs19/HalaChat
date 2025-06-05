@@ -18,6 +18,7 @@ enum Lables: String  {
     case qrCodeSubtitle = "qrCodeSubtitleLabel"
     case lightMode = "lightModeLabel"
     case darkMode = "darkModeLabel"
+   case  selectLanguage = "selectLanguageLabel"
     
     var textLib: String {
         return self.rawValue.localized

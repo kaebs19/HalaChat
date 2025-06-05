@@ -35,8 +35,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="pdz-BP-Zrv">
-                                <rect key="frame" x="30" y="486.66666666666669" width="333" height="107.33333333333331"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pdz-BP-Zrv">
+                                <rect key="frame" x="30" y="486.66666666666669" width="333" height="112.33333333333331"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRY-Mw-mbd">
                                         <rect key="frame" x="0.0" y="0.0" width="333" height="46"/>
@@ -44,7 +44,7 @@
                                         <state key="normal" title="Button"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8a-BX-3wF">
-                                        <rect key="frame" x="0.0" y="60.999999999999943" width="333" height="46.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="65.999999999999943" width="333" height="46.333333333333343"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
                                     </button>
@@ -76,6 +76,7 @@
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="iRY-Mw-mbd" id="wXP-qW-O2F"/>
+                        <outlet property="logoImageView" destination="KZ4-Iv-XoP" id="zHl-ES-4tD"/>
                         <outlet property="signupButton" destination="X8a-BX-3wF" id="JcA-MQ-O6b"/>
                         <outlet property="subtitleLabel" destination="NC7-63-jKf" id="JSC-um-FXE"/>
                         <outlet property="titleLabel" destination="aNo-v0-Pwb" id="YfL-XC-iwR"/>
@@ -518,7 +519,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

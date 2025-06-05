@@ -15,33 +15,72 @@ class HomeVC: UIViewController {
     @IBOutlet weak var showMessagesButton: UIButton!
     
     // MARK: - Variables - Arry
-    // معرّف المراقب للسمة
-    private var themeObserverId: UUID?
     
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         print("HomeVC")
+        
+        // ✅ إضافة: تفعيل نظام السمة الجديد
+        enableInstantTheme(transitionStyle: .crossDissolve)
+        
     }
-
-
+    
+    
+    
 }
 
 
 extension HomeVC {
     
-    private func setupUI() {
-        // تطبيق السمة العامة
-        applyTheme()
+    // ✅ إضافة: تنفيذ بروتوكول السمة الجديد
+    override func applyInstantThemeUpdate() {
+        super.applyInstantThemeUpdate()
+        
+        // تحديثات خاصة بـ HomeVC
+        updateCustomElements()
+    }
     
+    // ✅ إضافة: دالة لتحديث العناصر المخصصة
+    private func updateCustomElements() {
+        // تحديث خلفية الشاشة
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
+        
+        // تحديث الأزرار المخصصة
+        updateCustomButton()
+        
+        // تحديث العنوان
+        updateTitle()
+    }
+    
+    // ✅ إضافة: تحديث الزر المخصص
+    private func updateCustomButton() {
+
+    }
+    
+    // ✅ إضافة: تحديث العنوان
+    private func updateTitle() {
+        self.title = TitleBar.Home.titleName
+    }
+}
+
+extension HomeVC {
+    
+    private func setupUI() {
+        
+        // ✅ تحديث: استخدام ThemeManager الجديد
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
+        
         self.title = TitleBar.Home.titleName
         
-        if let button = showMessagesButton {
-            button.applyGradient(startColor: .Start, endColor: .End, direction: .horizontal, respectDarkMode: true)
-            button.addRadius(20)
-        } else {
-            print("Warning: showMessagesButton is nil!")
-        }
+        // إعداد الزر
+        setupButton()
+    }
+    
+    // ✅ إضافة: دالة منفصلة لإعداد الزر
+    private func setupButton() {
+
     }
 }

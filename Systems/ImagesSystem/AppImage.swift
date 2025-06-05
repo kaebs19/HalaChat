@@ -16,6 +16,7 @@ enum AppImage: String , CaseIterable {
     case Save = "save"
     case Refresh = "refresh"
     case Forward = "forward"
+    case UnselectedObject = "unselectedObject"
     
     // setting
     case AccountSettings = "accountSettings"
@@ -26,6 +27,7 @@ enum AppImage: String , CaseIterable {
     case Message = "message"
     case Notification = "notification"
     case Privacy = "privacy"
+    case Language = "Language"
     
     
     // TabBars

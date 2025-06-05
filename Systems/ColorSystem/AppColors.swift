@@ -1,7 +1,5 @@
-
 import UIKit
 
-// تعريف مجموعات الألوان الأساسية
 enum AppColors: String, CaseIterable {
     // ألوان أساسية
     case background = "Background"
@@ -13,12 +11,16 @@ enum AppColors: String, CaseIterable {
     case onlyWhite = "OnlyWhite"
     case onlyBlack = "OnlyBlack"
     case onlyRed = "OnlyRed"
-    case placeholderColor = "PlaceholderColor"
+    case textFieldBackground = "TextFieldBackground"
     case ashBlue = "AshBlue"
     case tabBarBackground = "TabBarBackground"
     case headerBackground = "HeaderBackground"
     case titleViewBackground = "TitleViewBackground"
     case iconTint = "IconTint"
+    case invertBackground = "InvertBackground"
+    case placeholder = "Placeholder"
+    case searchBackground = "SearchBackground"
+    case invertText = "InvertText"
     
     // ألوان إضافية
     case success = "Success"
@@ -32,7 +34,6 @@ enum AppColors: String, CaseIterable {
     case mainBackground = "MainBackground"
     case textColor = "TextColor"
     case buttonText = "ButtonText"
-    case inputBackground = "InputBackground"
     case inputText = "InputText"
     case cardBackground = "CardBackground"
     case secondBackground = "SecondBackground"
@@ -60,12 +61,12 @@ enum AppColors: String, CaseIterable {
     /// الحصول على لون UIColor مع تحديد الوضع
     func color(for theme: ThemeManager.ThemeMode) -> UIColor {
         switch theme {
-            case .auto:
-                return color
-            case .light:
-                return lightModeColor
-            case .dark:
-                return darkModeColor
+        case .auto:
+            return color
+        case .light:
+            return lightModeColor
+        case .dark:
+            return darkModeColor
         }
     }
     
@@ -108,3 +109,4 @@ enum AppColors: String, CaseIterable {
         return UIColor.color(fromHex: hexString, alpha: alpha)
     }
 }
+

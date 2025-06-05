@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = true  // لإظهار الشريط أعلى الكيبورد
         IQKeyboardManager.shared.resignOnTouchOutside = true  // لإغلاق الكيبورد عند الضغط بالخارج
 
+        configureGlobalThemeSystem()
+        
         return true
     }
 

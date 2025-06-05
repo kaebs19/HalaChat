@@ -20,6 +20,8 @@ class MessagesVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         print("MessagesVC")
+        enableInstantTheme(transitionStyle: .crossDissolve)
+        
     }
     
 
@@ -30,11 +32,20 @@ class MessagesVC: UIViewController {
 
 extension MessagesVC {
     
+    override func applyInstantThemeUpdate() {
+        // تحديث العناصر
+        updateCustomElements()
+    }
+    
     private func setupUI() {
         // تطبيق السمة العامة
-        applyTheme()
+        
         
         self.title = TitleBar.Messages.titleName
 
+    }
+    
+    private func updateCustomElements() {
+        
     }
 }

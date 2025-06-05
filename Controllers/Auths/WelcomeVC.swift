@@ -7,52 +7,49 @@
 
 import UIKit
 
-class WelcomeVC: UIViewController {
+final class WelcomeVC: UIViewController {
     
     // MARK: - Outlets
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
     
-    // MARK: - Variables - Arry
-    private var themeObserverId: UUID?
-
+    // MARK: - Properties
+    
+    /// حالة التحميل للأزرار
+    private var isLoading = false {
+        didSet {
+            updateButtonState()
+        }
+    }
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        // تطبيق السمات
+        enableInstantTheme(transitionStyle: .crossDissolve)
         setupUI()
-        print("Welcome")
-        
+        setupNavigationTitle()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        themeObserverId = setupThemeObserver { [weak self] in
-            // تحديث أي عناصر خاصة عند تغيير السمة
-            self?.updateCustomUIElements()
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        // تنظيف وازالة العناصر
-        clearThemeObserver(id: themeObserverId)
-
-    }
-    
-    deinit {
-        // تأكيد إضافي على تنظيف الموارد
-        clearThemeObserver(id: themeObserverId)
-     
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateCustomUIElements()
+        signupButton.reapplyGradient()
+        setupUI()
     }
+    
+    override func applyInstantThemeUpdate() {
+        super.applyInstantThemeUpdate()
+        // ✅ تحديث الألوان فقط عند تغيير السمة
+        updateThemeColors()
+        updateNavigationTitle()
+    }
+    
     
     // MARK: - Actions
     
@@ -62,54 +59,186 @@ class WelcomeVC: UIViewController {
 extension WelcomeVC {
     
     private func setupUI() {
-        updateCustomUIElements()
+        setupBackground()
+        setupLabels()
+        setupButtons()
+        
     }
     
-    private func updateCustomUIElements() {
-        titleLabel.customize(text: Lables.findNew.textLib,
-                             color: .text, ofSize: .size_16 ,
-                             font: .cairo , fontStyle: .extraBold)
-        subtitleLabel.customize(text: Lables.findNewSubtitle.textLib,
-                             color: .text, ofSize: .size_16,
-                             font: .poppins , fontStyle: .bold , lines: 3)
+    private func setupNavigationTitle() {
+        setStyledTitle(title: .welcomeToHalaChat)
+    }
+    
+    /// تحديث ألوان السمة فقط
+    private func updateThemeColors() {
+        // ✅ تحديث الخلفية
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
         
-        setupViews()
+        // ✅ تحديث النصوص
+        title = "Texst Title"
+        titleLabel.updateInstantThemeColors()
+        subtitleLabel.updateInstantThemeColors()
         
-        setupButton()
+        // ✅ تحديث الأزرار
+        loginButton.updateInstantThemeColors()
+        signupButton.updateInstantThemeColors()
+        signupButton.reapplyGradient()
+    }
+    
+    /// إعداد خلفية الشاشة
+    private func setupBackground() {
+        view.backgroundColor = ThemeManager.shared.color(.mainBackground)
+    }
+    
+    private func setupLabels() {
+        titleLabel.setupForInstantTheme( text: Lables.findNew.textLib,
+                                         textColorSet: .text,
+                                         font: .poppins, fontStyle: .extraBold,
+                                         ofSize: .size_18 ,
+                                         direction: .Center)
+        
+        subtitleLabel.setupForInstantTheme( text: Lables.welcomeSubtitle.textLib,
+                                            textColorSet: .text,
+                                            font: .cairo, fontStyle: .extraBold,
+                                            ofSize: .size_16 ,
+                                            direction: .Center ,
+                                            lines: 3)
     }
     
     private func setupViews() {
-   
-    }
-    
-    private func setupButton() {
-        loginButton.backgroundColor = AppColors.background.color
-        loginButton.customize(title: .login,
-                              titleColor: .textSecond,
-                              ofSize: .size_18,
-                              font: .cairo ,fontStyle: .bold,
-                              cornerRadius: 15 )
         
-        loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
-
-        signupButton.applyGradient(startColor: .Start, endColor: .End , direction: .diagonalTopRightToBottomLeft , respectDarkMode: true)
-        signupButton.customize(title: .signup,
-                              titleColor: .onlyWhite,
-                              ofSize: .size_18,
-                               font: .cairo ,fontStyle: .bold,
-                              cornerRadius: 15 )
-        signupButton.addTarget(self, action: #selector(signupTapped), for: .touchUpInside)
-
-
     }
     
-    @objc func loginTapped() {
-    //    goToVC(storyboard: .Welcome, identifiers: .LoginVC)
+    private func setupButtons() {
+        setupLoginButton()
+        setupSignupButton()
+    }
+    
+    private func setupLoginButton() {
+        loginButton.setupForInstantTheme(title: Buttons.login,
+                                         titleColorSet: .invertText,
+                                         backgroundColorSet: .invertBackground ,
+                                         ofSize: .size_18,
+                                         font: .cairo ,fontStyle: .bold,
+                                         cornerRadius: 15 ,
+                                         enablePressAnimation: true
+    )
+        
+        loginButton.addTarget(self,
+                              action: #selector(loginButtonTapped),
+                              for: .touchUpInside)
+        
+    }
+    
+    private func setupSignupButton() {
+        signupButton.applyGradient(startColor: .Start,
+                                   endColor: .End ,
+                                   direction: .diagonalTopRightToBottomLeft ,
+                                   respectDarkMode: true)
+        
+        signupButton.setupForInstantTheme(title: Buttons.signup,
+                                          titleColorSet: .onlyWhite,
+                                          ofSize: .size_18,
+                                          font: .cairo ,fontStyle: .bold,
+                                          cornerRadius: 15 ,
+                                          enablePressAnimation: false
+        )
+        
+        signupButton.addTarget(self,
+                               action: #selector(signupButtonTapped),
+                               for: .touchUpInside)
+        
+    }
+    
+    private func updateButtonState() {
+        loginButton.isEnabled = !isLoading
+        signupButton.isEnabled = !isLoading
+        
+        // ✅ إظهار مؤشر التحميل عند الحاجة
+        if isLoading {
+            loginButton.showLoading()
+            signupButton.showLoading()
+        } else {
+            loginButton.hideLoading()
+            signupButton.hideLoading()
+        }
+    }
+    
+    
+}
+
+extension WelcomeVC {
+    
+    
+    @objc func loginButtonTapped() {
+        //    goToVC(storyboard: .Welcome, identifiers: .LoginVC)
         goToVC(storyboard: .Main, identifiers: .MainBars)
+        
+        guard !isLoading else { return }
+        // ✅ تأثير اهتزاز خفيف
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        
+        // ✅ تحريك الانتقال
+        animateTransition{
+            self.navigateToLogin()
+            
+        }
     }
     
-    @objc func signupTapped() {
+    
+    @objc func signupButtonTapped() {
+        // ✅ منع الضغط المتعدد
+        guard !isLoading else { return }
+        
+        // ✅ تأثير اهتزاز متوسط
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        
+        // ✅ تحريك الانتقال
+        animateTransition {
+            self.navigateToSignup()
+        }
+    }
+    
+    func animateTransition(completion: @escaping () -> Void) {
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            options: .curveEaseOut,
+            animations: {
+                self.view.alpha = 0.8
+                self.view.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            },
+            completion: { _ in
+                completion()
+                // ✅ إعادة الشاشة لحالتها الطبيعية
+                UIView.animate(withDuration: 0.2) {
+                    self.view.alpha = 1.0
+                    self.view.transform = .identity
+                }
+            }
+        )
+    }
+    
+}
+
+// MARK: - Navigation
+
+extension WelcomeVC {
+    
+    /// الانتقال لشاشة تسجيل الدخول
+    func navigateToLogin() {
+        
+        // ✅ للتطوير: الانتقال المباشر للشاشة الرئيسية
+                #if DEBUG
+        goToVC(storyboard: .Main, identifiers: .MainBars)
+                #else
+        goToVC(storyboard: .Main, identifiers: .LoginVC)
+                #endif
+    }
+    
+    /// الانتقال لشاشة التسجيل الجديد
+    func navigateToSignup() {
         goToVC(storyboard: .Welcome, identifiers: .SignUpVC)
     }
-
 }
+

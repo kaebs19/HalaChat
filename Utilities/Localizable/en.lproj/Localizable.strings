@@ -23,7 +23,8 @@
 "qrCodeSubtitleLabel" = "Hala Chat App users can scan this QR Code to add you as a friend.";
 "lightModeLabel" = "Light";
 "darkModeLabel" = "Dark";
-
+"Languae" = "العربية";
+"selectLanguageLabel" = "SelectLanguage";
 
 // --   Buttons
 "HelpTitle"="Help";
@@ -34,6 +35,9 @@
 "TermsButton"= "Terms";
 "ConditionsButton"="Conditions";
 "sendButton" = "Send";
+"doneButton" = "Done";
+"cancelButton" = "Cancel";
+
 
 
 // ---    Text Field
@@ -71,4 +75,4 @@
 "PrivacySettingsTV" = "Privacy";
  "HelpAndSupportSettingsTV" = "Help Center";
  "AboutUsSettingsTV" = "About Hala Chat App";
-
+"LanguageSettingsTV" = "Language";

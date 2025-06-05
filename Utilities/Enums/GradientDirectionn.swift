@@ -14,5 +14,6 @@ enum GradientDirection {
     case vertical // من الأعلى إلى الأسفل
     case diagonalTopLeftToBottomRight // من أعلى اليسار إلى أسفل اليمين
     case diagonalTopRightToBottomLeft // من أعلى اليمين إلى أسفل اليسار
+    
     case custom(startPoint: CGPoint, endPoint: CGPoint) // اتجاه مخصص
 }

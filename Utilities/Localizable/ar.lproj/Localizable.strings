@@ -21,6 +21,9 @@
 "qrCodeSubtitleLabel" = "يمكن لمستخدمي تطبيق هلا شات مسح رمز الاستجابة السريعة هذا لإضافتك كصديق.";
 "lightModeLabel" = "فاتح";
 "darkModeLabel" = "مظلم";
+"Languae" = "English";
+"selectLanguageLabel" = "تحديد اللغة";
+
 
 
 // --   Buttons
@@ -32,6 +35,9 @@
 "TermsButton"= "شروط الاستخدام";
 "ConditionsButton"="سياسية الخصوصية";
 "sendButton" = "أرسال";
+"doneButton" = "تم";
+"cancelButton" = "الغاء الأمر";
+
 
 
 // ---    Text Field
@@ -42,6 +48,7 @@
 "phoneNumberTF" = "رقم الهاتف";
 "dateOfBirthTF" = "تاريخ الميلاد";
 "usernameTF"="اسم المستخدم";
+"searechTF"="بحث";
 
 
 // ---  Title
@@ -71,3 +78,4 @@
 "PrivacySettingsTV" = "الخصوصية";
 "HelpAndSupportSettingsTV" = "مركز المساعدة";
 "AboutUsSettingsTV" = "حول تطبيق هلا شات";
+"LanguageSettingsTV" = "اللغة";
